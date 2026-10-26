@@ -1,12 +1,7 @@
-# My Idol, BooBoo — Star Jump
+# My Idol, BooBoo ♡
+Single-page Y2K/wishcore mini-game website with Star Jump, Star Catch, and Bubble Pop.
 
-A single-page, GitHub Pages-ready browser platformer.
+## GitHub Pages
+Upload `index.html` and the `assets` folder to the root of your repository. In Settings → Pages, choose Deploy from a branch, `main`, and `/(root)`.
 
-## Publish on GitHub Pages
-1. Unzip this folder.
-2. Upload `index.html` and the `assets` folder to the root of your GitHub repository.
-3. Open **Settings → Pages**.
-4. Under Build and deployment, choose **Deploy from a branch**, select `main` and `/(root)`, then Save.
-
-Controls: Space / Up Arrow / W to jump, or tap the game screen / JUMP button.
-Progress best score is saved in the browser on the same device.
+Controls: Star Jump: Space/Up/W or tap. Star Catch: Arrow keys/A-D or tap to move. Bubble Pop: tap bubbles. Best scores save locally in the browser.
