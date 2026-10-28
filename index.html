@@ -2,26 +2,36 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>My Idol, BooBoo ♡</title>
 <style>
-:root{--pink:#ffb7dc;--hot:#ff65b9;--lav:#d8c6ff;--ink:#583b69}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:"Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:#fce8f6}
-body:before{content:"";position:fixed;inset:0;z-index:-2;background:linear-gradient(135deg,#ffeff9d9,#e8ddffcc),url("assets/booboo-sticker-collage.png") center/cover fixed;filter:saturate(1.1)}
-body:after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(#fff 1.2px,transparent 1.5px);background-size:22px 22px;opacity:.42}
-header{text-align:center;padding:18px 12px 8px}.logo{display:inline-block;padding:10px 24px;border:2px solid #fff;border-radius:22px;background:linear-gradient(110deg,#fff9,#ffd9f0ee,#e7dcffef);box-shadow:0 5px 0 #dba6d5,0 0 25px #fff;font-weight:1000;letter-spacing:1px;text-shadow:2px 2px #fff;font-size:clamp(22px,4vw,36px)}
-.tag{margin:8px 0 0;font-size:14px;font-weight:900;letter-spacing:1.4px;color:#9c4b91;text-shadow:0 1px white}
-.shell{width:min(1000px,96vw);margin:10px auto 30px;display:grid;grid-template-columns:minmax(0,1fr) 205px;gap:14px;align-items:start}
-.handheld{border:8px solid #fdfbff;border-radius:45px;background:linear-gradient(145deg,#ffc6e7,#e7d8ff 55%,#f9c9e7);padding:18px;box-shadow:0 12px 0 #c8a7d8,0 18px 35px #986ba866;position:relative}
-.handheld:before,.handheld:after{content:"✦";position:absolute;color:white;text-shadow:0 0 8px #ff70c6;font-size:22px}.handheld:before{top:10px;left:25px}.handheld:after{bottom:8px;right:25px}
-.modes{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:0 0 12px}.mode{padding:8px 12px;font-size:12px;border-radius:999px;border:2px solid white;background:#ffffffb8;box-shadow:0 3px 0 #d7add7}.mode.active{background:linear-gradient(#ffbce1,#ff80c7);color:white}
-.screen{border:5px solid #fff;border-radius:22px;overflow:hidden;background:#dffaff;box-shadow:inset 0 0 0 2px #d6a8e7;position:relative}
-.hud{display:flex;justify-content:space-between;gap:8px;padding:9px 12px;background:linear-gradient(90deg,#fff5fb,#f5edff);font-size:12px;font-weight:900}
-canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;background:linear-gradient(#c9f5ff,#fdf2ff 75%,#ffc8e7);touch-action:manipulation}
-.controls{display:flex;justify-content:space-between;gap:8px;padding:10px;background:#fff8fd}
-button{border:2px solid white;border-radius:16px;background:linear-gradient(#fff,#ffc9e8);color:#79456f;font-weight:900;padding:10px 13px;box-shadow:0 3px 0 #d79aca;cursor:pointer}
-button:active{transform:translateY(2px);box-shadow:0 1px 0 #d79aca}
-.panel{background:#fff9ffdf;border:2px solid white;border-radius:22px;padding:15px;box-shadow:0 5px 0 #ddb5dc}.panel h3{margin:0 0 8px;font-size:14px}.panel p{font-size:12px;line-height:1.55;margin:5px 0}.mini{font-size:24px;text-align:center}
-@media(max-width:700px){.shell{grid-template-columns:1fr}.handheld{padding:12px;border-radius:34px}.panel{padding:12px}}
+:root{color-scheme:light;--rose:#e887b4;--pink:#ffd5e8;--cream:#fffaf5;--ink:#684b5b;--lilac:#e6d9f5;--berry:#b85f8b;--line:#f1c5d9}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:ui-rounded,"Trebuchet MS",system-ui,sans-serif;color:var(--ink);background:#fff7fa}
+body:before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse at 8% 8%,#ffe1ed 0,transparent 32%),radial-gradient(ellipse at 92% 20%,#eee3ff 0,transparent 34%),linear-gradient(160deg,#fff9f5,#fff0f7 58%,#f7f0ff)}
+body:after{content:"♡  ✧  ♡  ✧  ♡";position:fixed;inset:0;z-index:-1;pointer-events:none;color:#e7abc8;font-size:20px;letter-spacing:42px;line-height:100px;opacity:.18;overflow:hidden}
+header{text-align:center;padding:30px 14px 16px}
+.logo{position:relative;display:inline-block;padding:14px 30px;border:2px solid #fff;border-radius:8px;background:var(--cream);box-shadow:5px 5px 0 #edbfd5,0 0 0 1px #f3d5e2;font-family:Georgia,serif;font-weight:900;letter-spacing:1.2px;color:#a85d82;text-shadow:1px 1px white;font-size:clamp(23px,4vw,38px);transform:rotate(-1deg)}
+.logo:before,.logo:after{content:"🎀";position:absolute;font-size:22px;top:-15px}.logo:before{left:-12px;transform:rotate(-18deg)}.logo:after{right:-12px;transform:rotate(18deg)}
+.tag{margin:13px 0 0;font-family:Georgia,serif;font-style:italic;font-size:15px;letter-spacing:1px;color:#a66a8a}
+.shell{width:min(1080px,94vw);margin:18px auto 38px;display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:20px;align-items:start}
+.handheld{border:1px solid #f0c7d9;border-radius:24px;background:linear-gradient(145deg,#fffaf6,#ffe4ef 58%,#eee4ff);padding:20px;box-shadow:0 10px 0 #e8c0d5,0 18px 38px #a86b8820;position:relative}
+.handheld:before{content:"♡  YOUR LITTLE IDOL PLAYROOM  ♡";display:block;text-align:center;margin:0 0 15px;color:#b77b98;font-size:10px;font-weight:900;letter-spacing:2px}
+.handheld:after{content:"✧";position:absolute;top:12px;right:18px;color:#c07ba0;font-size:22px}
+.modes{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:0 0 14px}
+.mode{padding:10px 13px;font-size:12px;border-radius:8px;border:1px solid #edc5d8;background:#fffaf6;box-shadow:0 3px 0 #edc5d8;color:#92627a;transition:transform .16s,background .16s}
+.mode:hover{transform:translateY(-2px)}.mode.active{background:#d987af;color:white;border-color:#d987af;box-shadow:0 3px 0 #b96e94}
+.screen{border:5px solid #fffaf6;border-radius:14px;overflow:hidden;background:#fff6fb;box-shadow:0 0 0 1px #edc5d8;position:relative}
+.hud{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:11px 13px;background:#fffaf6;border-bottom:1px dashed #e7b9cf;font-size:11px;font-weight:900;letter-spacing:.4px;color:#9e6683}
+canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;background:linear-gradient(#f5e9ff,#fff4f8 75%,#ffd7e9);touch-action:manipulation}
+.controls{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;padding:12px;background:#fffaf6;border-top:1px dashed #e7b9cf}
+button{border:1px solid #e8b8ce;border-radius:9px;background:#fff;color:#905a77;font-weight:900;padding:10px 14px;box-shadow:0 3px 0 #edc5d8;cursor:pointer;transition:transform .15s,box-shadow .15s}
+button:hover{transform:translateY(-2px);box-shadow:0 5px 0 #edc5d8}button:active{transform:translateY(2px);box-shadow:0 1px 0 #edc5d8}
+.panel{background:#fffaf6eF;border:1px solid #f0c8da;border-radius:14px;padding:17px;box-shadow:4px 4px 0 #f0d5e2;margin-bottom:14px}
+.panel h3{margin:0 0 10px;font-family:Georgia,serif;font-size:16px;color:#a65d82}.panel p{font-size:12px;line-height:1.7;margin:7px 0}.mini{font-size:23px;text-align:center;margin-top:10px}
+.sticker-row{display:flex;justify-content:center;gap:8px;font-size:22px;padding:4px}
+.panel .tiny-label{font-size:10px;letter-spacing:1.5px;font-weight:900;color:#bb7b9a;text-transform:uppercase}
+@media(max-width:760px){header{padding-top:25px}.shell{grid-template-columns:1fr;gap:14px}.handheld{padding:12px;border-radius:18px}.panel{padding:14px}.logo{padding:12px 22px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important}}
 </style></head><body>
-<header><div class="logo">♡ MY IDOL, BOOBOO ♡</div><div class="tag">be iconic, just like BooBoo ✧</div></header>
+<header><div class="logo">My Idol, BooBoo ♡</div><div class="tag">a tiny coquette world for your inner idol ✧</div></header>
 <main class="shell">
 <section class="handheld">
  <nav class="modes" aria-label="Choose a mini game">
@@ -29,19 +39,24 @@ button:active{transform:translateY(2px);box-shadow:0 1px 0 #d79aca}
   <button class="mode" data-mode="catch">♡ Star Catch</button>
   <button class="mode" data-mode="pop">✧ Bubble Pop</button>
  </nav>
- <div class="screen"><div class="hud"><span id="gamename">★ STAR JUMP</span><span id="score">SCORE 0000</span><span id="status">READY!</span></div>
+ <div class="screen"><div class="hud"><span id="gamename">★ STAR JUMP</span><span id="score">SCORE 0000</span><span id="best">BEST 0000</span><span id="status">READY!</span></div>
  <canvas id="game" width="800" height="450" aria-label="Mini games"></canvas>
  <div class="controls"><button id="start">▶ PLAY</button><button id="action">♡ JUMP</button><button id="reset">↻ RETRY</button></div></div>
 </section>
-<aside><section class="panel"><h3>✧ HOW TO PLAY ✧</h3><p id="instructions">Jump over obstacles and collect stars!</p><p><b>Keyboard:</b> Space / ↑ / W to jump. For Star Catch, use ← → or A / D. Bubble Pop: tap bubbles or press the screen.</p><p>On mobile, use the game buttons or swipe/tap the play screen.</p><div class="mini">✦ ♡ 💿 ♡ ✦</div></section></aside>
+<aside>
+<section class="panel"><div class="tiny-label">your game guide</div><h3>♡ How to Play</h3><p id="instructions">Jump over obstacles and collect stars!</p><p><b>Keyboard:</b> Space / ↑ / W to jump. For Star Catch, use ← → or A / D. Bubble Pop: tap bubbles or press the screen.</p><p>On touch screens, tap the play area to move or interact. Use Play to pause and resume, and Retry for a fresh round.</p><div class="sticker-row">🎀 💿 ♡ ✧</div></section>
+<section class="panel"><div class="tiny-label">today's little mission</div><h3>✧ Idol Practice</h3><p>Play a round, collect some stars, and beat your personal best. Every tiny practice counts!</p><p id="quest-status">♡ Your next high score is waiting.</p><div class="mini">📸 💗 ⭐</div></section>
+<section class="panel"><div class="tiny-label">the cute corner</div><h3>♡ BooBoo's Note</h3><p>Take your time, have fun, and remember: you are the main character here.</p></section>
+</aside>
 </main>
 <script>
 (()=>{
-const c=document.getElementById('game'),x=c.getContext('2d'),scoreEl=document.getElementById('score'),statusEl=document.getElementById('status'),nameEl=document.getElementById('gamename'),instructions=document.getElementById('instructions'),startBtn=document.getElementById('start'),actionBtn=document.getElementById('action');
+const c=document.getElementById('game'),x=c.getContext('2d'),scoreEl=document.getElementById('score'),bestEl=document.getElementById('best'),questEl=document.getElementById('quest-status'),statusEl=document.getElementById('status'),nameEl=document.getElementById('gamename'),instructions=document.getElementById('instructions'),startBtn=document.getElementById('start'),actionBtn=document.getElementById('action');
 let mode='jump',running=false,dead=false,score=0,best=Number(localStorage.getItem('booboo-best-'+mode)||0),frame=0,speed=4,obstacles=[],stars=[],bubbles=[],keys={};
 const p={x:105,y:320,w:48,h:48,vy:0,onGround:true};
-function setMode(m){mode=m;document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));nameEl.textContent=({jump:'★ STAR JUMP',catch:'♡ STAR CATCH',pop:'✧ BUBBLE POP'})[m];instructions.textContent=({jump:'Jump over the dreamy obstacles and collect stars.',catch:'Move BooBoo side to side to catch falling stars and dodge clouds.',pop:'Tap or click the floating bubbles to pop them for points.'})[m];actionBtn.textContent=({jump:'♡ JUMP',catch:'◀ MOVE ▶',pop:'✧ POP!'})[m];reset(); }
-function reset(){running=false;dead=false;score=0;frame=0;speed=4;obstacles=[];stars=[];bubbles=[];p.x=105;p.y=320;p.vy=0;p.onGround=true;statusEl.textContent='READY!';startBtn.textContent='▶ PLAY';draw()}
+function updateBest(){const v=Number(localStorage.getItem('booboo-best-'+mode)||0);bestEl.textContent='BEST '+String(v).padStart(4,'0');questEl.textContent=score>0?'♡ Current practice score: '+score:'♡ Your next high score is waiting.';}
+function setMode(m){mode=m;updateBest();document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));nameEl.textContent=({jump:'★ STAR JUMP',catch:'♡ STAR CATCH',pop:'✧ BUBBLE POP'})[m];instructions.textContent=({jump:'Jump over the dreamy obstacles and collect stars.',catch:'Move BooBoo side to side to catch falling stars and dodge clouds.',pop:'Tap or click the floating bubbles to pop them for points.'})[m];actionBtn.textContent=({jump:'♡ JUMP',catch:'◀ MOVE ▶',pop:'✧ POP!'})[m];reset(); }
+function reset(){running=false;dead=false;score=0;scoreEl.textContent='SCORE 0000';updateBest();frame=0;speed=4;obstacles=[];stars=[];bubbles=[];p.x=105;p.y=320;p.vy=0;p.onGround=true;statusEl.textContent='READY!';startBtn.textContent='▶ PLAY';draw()}
 function start(){if(running)return;if(dead)reset();running=true;dead=false;statusEl.textContent='LET’S GO!';startBtn.textContent='Ⅱ PAUSE';requestAnimationFrame(loop)}
 function jump(){if(!running){start();return}if(mode==='jump'&&p.onGround){p.vy=-12.7;p.onGround=false}else if(mode==='catch'){p.x=Math.min(735,p.x+42)}}
 function roundRect(a,b,w,h,r,fill){x.fillStyle=fill;x.beginPath();x.roundRect(a,b,w,h,r);x.fill()}
@@ -59,9 +74,9 @@ function loop(){if(!running)return;frame++;score++;speed=Math.min(7.5,4+score/18
 if(mode==='jump'){if(frame%78===0)obstacles.push({x:820,y:333,w:30+Math.random()*25,h:37});if(frame%95===0)stars.push({x:820,y:260-Math.random()*75});obstacles.forEach(o=>o.x-=speed);stars.forEach(s=>s.x-=speed);obstacles=obstacles.filter(o=>o.x+o.w>-10);stars=stars.filter(s=>s.x>-20&&!s.got);p.vy+=.62;p.y+=p.vy;if(p.y>320){p.y=320;p.vy=0;p.onGround=true}for(const o of obstacles)if(p.x+p.w-7>o.x&&p.x+8<o.x+o.w&&p.y+p.h-4>o.y){end();return}for(const s of stars)if(!s.got&&Math.abs(p.x+24-s.x)<27&&Math.abs(p.y+23-s.y)<30){s.got=true;score+=100}}
 if(mode==='catch'){if(keys.ArrowLeft||keys.KeyA)p.x=Math.max(5,p.x-5);if(keys.ArrowRight||keys.KeyD)p.x=Math.min(745,p.x+5);if(frame%42===0)stars.push({x:25+Math.random()*750,y:-10});if(frame%85===0)obstacles.push({x:25+Math.random()*750,y:-30});stars.forEach(s=>s.y+=3.6);obstacles.forEach(o=>o.y+=2.8);stars=stars.filter(s=>s.y<460&&!s.got);obstacles=obstacles.filter(o=>o.y<460);for(const s of stars)if(Math.abs(s.x-(p.x+24))<35&&Math.abs(s.y-360)<35){s.got=true;score+=100}for(const o of obstacles)if(Math.abs(o.x-(p.x+24))<42&&Math.abs(o.y-360)<30){end();return}}
 if(mode==='pop'){if(frame%32===0)bubbles.push({x:35+Math.random()*730,y:465,r:18+Math.random()*15,color:['#ff90ce','#bda7ff','#8be6ef','#ffdf82'][Math.floor(Math.random()*4)]});bubbles.forEach(b=>b.y-=2.8);bubbles=bubbles.filter(b=>b.y>-30);if(frame%600===0){end();return}}
-scoreEl.textContent='SCORE '+String(score).padStart(4,'0');draw();requestAnimationFrame(loop)}
-function end(){running=false;dead=true;statusEl.textContent='GAME OVER';startBtn.textContent='▶ PLAY';let key='booboo-best-'+mode,best=Number(localStorage.getItem(key)||0);if(score>best)localStorage.setItem(key,score);draw()}
-function pointer(e){let r=c.getBoundingClientRect(),cx=(e.clientX-r.left)*800/r.width,cy=(e.clientY-r.top)*450/r.height;if(mode==='pop'){for(let i=bubbles.length-1;i>=0;i--){let b=bubbles[i];if(Math.hypot(cx-b.x,cy-b.y)<b.r+10){bubbles.splice(i,1);score+=100;scoreEl.textContent='SCORE '+String(score).padStart(4,'0');return}}}else if(mode==='jump'){if(running)jump();else start()}else{p.x=Math.max(0,Math.min(745,cx-24));if(!running)start()}}
+scoreEl.textContent='SCORE '+String(score).padStart(4,'0');questEl.textContent='♡ Practice score: '+score+' — keep going!';draw();requestAnimationFrame(loop)}
+function end(){running=false;dead=true;statusEl.textContent='ROUND OVER';startBtn.textContent='▶ PLAY';let key='booboo-best-'+mode,record=Number(localStorage.getItem(key)||0);if(score>record)localStorage.setItem(key,score);updateBest();draw()}
+function pointer(e){let r=c.getBoundingClientRect(),cx=(e.clientX-r.left)*800/r.width,cy=(e.clientY-r.top)*450/r.height;if(mode==='pop'){for(let i=bubbles.length-1;i>=0;i--){let b=bubbles[i];if(Math.hypot(cx-b.x,cy-b.y)<b.r+10){bubbles.splice(i,1);score+=100;scoreEl.textContent='SCORE '+String(score).padStart(4,'0');questEl.textContent='♡ Nice pop! Practice score: '+score;return}}}else if(mode==='jump'){if(running)jump();else start()}else{p.x=Math.max(0,Math.min(745,cx-24));if(!running)start()}}
 document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
 startBtn.addEventListener('click',()=>{if(running){running=false;statusEl.textContent='PAUSED';startBtn.textContent='▶ RESUME'}else start()});
 actionBtn.addEventListener('click',()=>{if(mode==='jump')jump();else if(mode==='catch'){p.x=Math.min(745,p.x+45);if(!running)start()}else{if(!running)start();score+=50}});
