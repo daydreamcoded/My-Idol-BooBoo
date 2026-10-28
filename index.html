@@ -50,39 +50,77 @@ button:hover{transform:translateY(-2px);box-shadow:0 5px 0 #edc5d8}button:active
 </aside>
 </main>
 <script>
-(()=>{
-const c=document.getElementById('game'),x=c.getContext('2d'),scoreEl=document.getElementById('score'),bestEl=document.getElementById('best'),questEl=document.getElementById('quest-status'),statusEl=document.getElementById('status'),nameEl=document.getElementById('gamename'),instructions=document.getElementById('instructions'),startBtn=document.getElementById('start'),actionBtn=document.getElementById('action');
-let mode='jump',running=false,dead=false,score=0,best=Number(localStorage.getItem('booboo-best-'+mode)||0),frame=0,speed=4,obstacles=[],stars=[],bubbles=[],keys={};
-const p={x:105,y:320,w:48,h:48,vy:0,onGround:true};
-function updateBest(){const v=Number(localStorage.getItem('booboo-best-'+mode)||0);bestEl.textContent='BEST '+String(v).padStart(4,'0');questEl.textContent=score>0?'♡ Current practice score: '+score:'♡ Your next high score is waiting.';}
-function setMode(m){mode=m;updateBest();document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));nameEl.textContent=({jump:'★ STAR JUMP',catch:'♡ STAR CATCH',pop:'✧ BUBBLE POP'})[m];instructions.textContent=({jump:'Jump over the dreamy obstacles and collect stars.',catch:'Move BooBoo side to side to catch falling stars and dodge clouds.',pop:'Tap or click the floating bubbles to pop them for points.'})[m];actionBtn.textContent=({jump:'♡ JUMP',catch:'◀ MOVE ▶',pop:'✧ POP!'})[m];reset(); }
-function reset(){running=false;dead=false;score=0;scoreEl.textContent='SCORE 0000';updateBest();frame=0;speed=4;obstacles=[];stars=[];bubbles=[];p.x=105;p.y=320;p.vy=0;p.onGround=true;statusEl.textContent='READY!';startBtn.textContent='▶ PLAY';draw()}
-function start(){if(running)return;if(dead)reset();running=true;dead=false;statusEl.textContent='LET’S GO!';startBtn.textContent='Ⅱ PAUSE';requestAnimationFrame(loop)}
-function jump(){if(!running){start();return}if(mode==='jump'&&p.onGround){p.vy=-12.7;p.onGround=false}else if(mode==='catch'){p.x=Math.min(735,p.x+42)}}
-function roundRect(a,b,w,h,r,fill){x.fillStyle=fill;x.beginPath();x.roundRect(a,b,w,h,r);x.fill()}
-function boo(a,b){x.save();x.translate(a,b);x.fillStyle='#fff';x.strokeStyle='#bda2d7';x.lineWidth=3;x.beginPath();x.ellipse(24,30,23,18,0,0,7);x.fill();x.stroke();x.beginPath();x.moveTo(5,18);x.lineTo(7,1);x.lineTo(20,12);x.closePath();x.fill();x.stroke();x.beginPath();x.moveTo(29,12);x.lineTo(43,1);x.lineTo(44,20);x.closePath();x.fill();x.stroke();x.fillStyle='#76536c';x.beginPath();x.ellipse(24,21,20,15,0,0,7);x.fill();x.fillStyle='#fff';x.beginPath();x.ellipse(24,27,15,13,0,0,7);x.fill();x.fillStyle='#7acdf1';x.beginPath();x.ellipse(16,21,4,5,0,0,7);x.ellipse(32,21,4,5,0,0,7);x.fill();x.fillStyle='#3d3857';x.beginPath();x.arc(17,22,1.7,0,7);x.arc(31,22,1.7,0,7);x.fill();x.fillStyle='#f08ebd';x.beginPath();x.moveTo(22,28);x.lineTo(26,28);x.lineTo(24,31);x.closePath();x.fill();x.restore()}
-function draw(){x.clearRect(0,0,800,450);let g=x.createLinearGradient(0,0,0,450);g.addColorStop(0,'#b9f3ff');g.addColorStop(.68,'#f8eaff');g.addColorStop(1,'#ffc9e7');x.fillStyle=g;x.fillRect(0,0,800,450);
-for(let i=0;i<24;i++){x.fillStyle=i%2?'#fff':'#fff4a8';x.font='18px sans-serif';x.fillText(i%3?'✦':'♡',(i*97+frame*.25)%820,(i*61)%270)}
-for(let i=0;i<5;i++){let a=(i*190-(frame*speed*.18)%950+950)%950-80,b=70+(i%3)*45;x.fillStyle='#ffffffb8';x.beginPath();x.arc(a,b,22,0,7);x.arc(a+22,b-8,29,0,7);x.arc(a+48,b,20,0,7);x.fill()}
-if(mode==='jump'){roundRect(0,370,800,80,0,'#f6b8e2');obstacles.forEach(o=>{roundRect(o.x,o.y,o.w,o.h,12,'#fff');roundRect(o.x,o.y+5,o.w,o.h,10,'#c8b5ff');x.fillStyle='#fff';x.fillText('✦',o.x+o.w/2-5,o.y+17)});stars.forEach(s=>star(s.x,s.y));boo(p.x,p.y)}
-if(mode==='catch'){roundRect(0,390,800,60,0,'#f6b8e2');stars.forEach(s=>star(s.x,s.y));obstacles.forEach(o=>{x.fillStyle='#c7b2ee';x.beginPath();x.arc(o.x,o.y,20,0,7);x.arc(o.x+20,o.y-9,24,0,7);x.arc(o.x+40,o.y,19,0,7);x.fill()});boo(p.x,340)}
-if(mode==='pop'){bubbles.forEach(b=>{x.fillStyle=b.color;x.globalAlpha=.78;x.beginPath();x.arc(b.x,b.y,b.r,0,7);x.fill();x.globalAlpha=1;x.strokeStyle='#fff';x.lineWidth=4;x.stroke();x.fillStyle='#fff';x.font='18px sans-serif';x.fillText('✦',b.x-7,b.y+6)});boo(375,345)}
-if(!running&&!dead){x.fillStyle='#754d87';x.textAlign='center';x.font='bold 26px Trebuchet MS';x.fillText(({jump:'BOOBOO STAR JUMP',catch:'BOOBOO STAR CATCH',pop:'BOOBOO BUBBLE POP'})[mode],400,205);x.font='bold 15px Trebuchet MS';x.fillText('PRESS PLAY TO BEGIN ♡',400,235);x.textAlign='left'}
-if(dead){x.fillStyle='#754d87';x.textAlign='center';x.font='bold 30px Trebuchet MS';x.fillText(mode==='jump'?'OH NO, BOOBOO! ♡':'TIME TO TRY AGAIN! ♡',400,205);x.font='bold 16px Trebuchet MS';x.fillText('Tap RETRY and try again!',400,235);x.textAlign='left'}}
-function star(a,b){x.save();x.translate(a,b);x.rotate(frame*.04);x.fillStyle='#fff36d';x.strokeStyle='#fff';x.lineWidth=3;x.beginPath();for(let i=0;i<10;i++){let r=i%2?7:15,ang=i*Math.PI/5-Math.PI/2;x.lineTo(Math.cos(ang)*r,Math.sin(ang)*r)}x.closePath();x.fill();x.stroke();x.restore()}
-function loop(){if(!running)return;frame++;score++;speed=Math.min(7.5,4+score/1800);
-if(mode==='jump'){if(frame%78===0)obstacles.push({x:820,y:333,w:30+Math.random()*25,h:37});if(frame%95===0)stars.push({x:820,y:260-Math.random()*75});obstacles.forEach(o=>o.x-=speed);stars.forEach(s=>s.x-=speed);obstacles=obstacles.filter(o=>o.x+o.w>-10);stars=stars.filter(s=>s.x>-20&&!s.got);p.vy+=.62;p.y+=p.vy;if(p.y>320){p.y=320;p.vy=0;p.onGround=true}for(const o of obstacles)if(p.x+p.w-7>o.x&&p.x+8<o.x+o.w&&p.y+p.h-4>o.y){end();return}for(const s of stars)if(!s.got&&Math.abs(p.x+24-s.x)<27&&Math.abs(p.y+23-s.y)<30){s.got=true;score+=100}}
-if(mode==='catch'){if(keys.ArrowLeft||keys.KeyA)p.x=Math.max(5,p.x-5);if(keys.ArrowRight||keys.KeyD)p.x=Math.min(745,p.x+5);if(frame%42===0)stars.push({x:25+Math.random()*750,y:-10});if(frame%85===0)obstacles.push({x:25+Math.random()*750,y:-30});stars.forEach(s=>s.y+=3.6);obstacles.forEach(o=>o.y+=2.8);stars=stars.filter(s=>s.y<460&&!s.got);obstacles=obstacles.filter(o=>o.y<460);for(const s of stars)if(Math.abs(s.x-(p.x+24))<35&&Math.abs(s.y-360)<35){s.got=true;score+=100}for(const o of obstacles)if(Math.abs(o.x-(p.x+24))<42&&Math.abs(o.y-360)<30){end();return}}
-if(mode==='pop'){if(frame%32===0)bubbles.push({x:35+Math.random()*730,y:465,r:18+Math.random()*15,color:['#ff90ce','#bda7ff','#8be6ef','#ffdf82'][Math.floor(Math.random()*4)]});bubbles.forEach(b=>b.y-=2.8);bubbles=bubbles.filter(b=>b.y>-30);if(frame%600===0){end();return}}
-scoreEl.textContent='SCORE '+String(score).padStart(4,'0');questEl.textContent='♡ Practice score: '+score+' — keep going!';draw();requestAnimationFrame(loop)}
-function end(){running=false;dead=true;statusEl.textContent='ROUND OVER';startBtn.textContent='▶ PLAY';let key='booboo-best-'+mode,record=Number(localStorage.getItem(key)||0);if(score>record)localStorage.setItem(key,score);updateBest();draw()}
-function pointer(e){let r=c.getBoundingClientRect(),cx=(e.clientX-r.left)*800/r.width,cy=(e.clientY-r.top)*450/r.height;if(mode==='pop'){for(let i=bubbles.length-1;i>=0;i--){let b=bubbles[i];if(Math.hypot(cx-b.x,cy-b.y)<b.r+10){bubbles.splice(i,1);score+=100;scoreEl.textContent='SCORE '+String(score).padStart(4,'0');questEl.textContent='♡ Nice pop! Practice score: '+score;return}}}else if(mode==='jump'){if(running)jump();else start()}else{p.x=Math.max(0,Math.min(745,cx-24));if(!running)start()}}
+(()=> {
+const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');
+const scoreEl=document.getElementById('score'),bestEl=document.getElementById('best'),questEl=document.getElementById('quest-status'),statusEl=document.getElementById('status'),nameEl=document.getElementById('gamename'),instructions=document.getElementById('instructions'),startBtn=document.getElementById('start'),actionBtn=document.getElementById('action');
+const W=800,H=450,ground=370;
+let mode='jump',running=false,dead=false,score=0,frame=0,speed=4,obstacles=[],stars=[],bubbles=[],particles=[],keys={},lives=3,seconds=45,combo=0,lastPop=-99,animation=0;
+const cat={x:100,y:310,w:58,h:58,vy:0,onGround:true};
+const names={jump:'★ BOOBOO’S DREAMLAND',catch:'♡ PAWS & PRESENTS',pop:'✧ BUBBLE TEA PARTY'};
+const tips={jump:'Jump between dreamy platforms, collect stars, and dodge the little cloud monsters. Space / ↑ to jump; double-jump is enabled!',catch:'Move BooBoo with ← → or A / D. Catch falling presents and hearts; avoid storm clouds. You have 3 hearts!',pop:'Pop bubbles by tapping them or clicking them. Chain pops for combos and bonus points before the 45-second party ends!'};
+function bestKey(){return 'booboo-best-'+mode}
+function updateBest(){let b=0;try{b=Number(localStorage.getItem(bestKey())||0)}catch(e){}bestEl.textContent='BEST '+String(b).padStart(4,'0');questEl.textContent=score?'♡ Practice score: '+score+' points — you’ve got this!':'♡ Your next high score is waiting.'}
+function setMode(m){mode=m;document.querySelectorAll('.mode').forEach(b=>b.classList.toggle('active',b.dataset.mode===m));nameEl.textContent=names[m];instructions.textContent=tips[m];actionBtn.textContent=({jump:'♡ JUMP',catch:'🎁 DASH',pop:'✧ POP BONUS'})[m];reset()}
+function reset(){running=false;dead=false;score=0;frame=0;speed=4;seconds=45;lives=3;combo=0;lastPop=-99;obstacles=[];stars=[];bubbles=[];particles=[];cat.x=100;cat.y=310;cat.vy=0;cat.onGround=true;scoreEl.textContent='SCORE 0000';statusEl.textContent='READY!';startBtn.textContent='▶ PLAY';updateBest();draw()}
+function begin(){if(dead)reset();if(running)return;running=true;statusEl.textContent=mode==='pop'?'45 SEC PARTY!':'LET’S GO!';startBtn.textContent='Ⅱ PAUSE';animation=requestAnimationFrame(loop)}
+function pause(){running=false;cancelAnimationFrame(animation);statusEl.textContent='PAUSED';startBtn.textContent='▶ RESUME'}
+function addScore(n){score+=n;scoreEl.textContent='SCORE '+String(score).padStart(4,'0');questEl.textContent='♡ '+(combo>1?combo+' combo! ':'')+'Practice score: '+score}
+function jump(){if(!running){begin();return}if(mode!=='jump')return;if(cat.onGround||cat.jumps<2){cat.vy=cat.onGround?-13:-10;cat.onGround=false;cat.jumps=(cat.jumps||0)+1;burst(cat.x+28,cat.y+50,'#fff0a6',4)}}
+function rr(x,y,w,h,r,color){ctx.fillStyle=color;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}
+function drawCat(x,y){ctx.save();ctx.translate(x,y);
+ // fluffy seal-point ragdoll body and plume tail
+ ctx.strokeStyle='#fdfaff';ctx.lineWidth=13;ctx.lineCap='round';ctx.beginPath();ctx.moveTo(10,43);ctx.bezierCurveTo(-10,31,-2,10,9,22);ctx.stroke();
+ ctx.strokeStyle='#87728f';ctx.lineWidth=6;ctx.beginPath();ctx.moveTo(7,37);ctx.quadraticCurveTo(-2,23,6,21);ctx.stroke();
+ ctx.fillStyle='#fffaf8';ctx.strokeStyle='#c6b1d0';ctx.lineWidth=2.5;ctx.beginPath();ctx.ellipse(29,43,27,19,-.05,0,Math.PI*2);ctx.fill();ctx.stroke();
+ // feet
+ for(const px of [13,39]){ctx.fillStyle='#fff';ctx.beginPath();ctx.ellipse(px,54,9,6,0,0,Math.PI*2);ctx.fill();ctx.stroke()}
+ // head and ears
+ ctx.fillStyle='#fffaf8';ctx.beginPath();ctx.moveTo(4,20);ctx.quadraticCurveTo(1,1,17,8);ctx.lineTo(24,17);ctx.quadraticCurveTo(31,11,39,17);ctx.lineTo(49,5);ctx.quadraticCurveTo(61,3,55,23);ctx.quadraticCurveTo(57,43,30,43);ctx.quadraticCurveTo(4,42,4,20);ctx.fill();ctx.stroke();
+ // dark ragdoll ears + face mask
+ ctx.fillStyle='#78627f';ctx.beginPath();ctx.moveTo(7,19);ctx.lineTo(11,8);ctx.lineTo(21,18);ctx.quadraticCurveTo(13,22,7,19);ctx.fill();
+ ctx.beginPath();ctx.moveTo(39,18);ctx.lineTo(51,8);ctx.lineTo(53,21);ctx.quadraticCurveTo(46,23,39,18);ctx.fill();
+ ctx.fillStyle='#8a748f';ctx.beginPath();ctx.ellipse(17,25,10,13,-.3,0,Math.PI*2);ctx.ellipse(43,25,10,13,.3,0,Math.PI*2);ctx.fill();
+ // white blaze and muzzle
+ ctx.fillStyle='#fffaf8';ctx.beginPath();ctx.moveTo(29,15);ctx.quadraticCurveTo(24,27,29,31);ctx.quadraticCurveTo(34,27,31,15);ctx.fill();
+ ctx.beginPath();ctx.ellipse(30,31,14,10,0,0,Math.PI*2);ctx.fill();
+ // bright blue eyes
+ ctx.fillStyle='#68c9f4';ctx.beginPath();ctx.ellipse(20,25,4.3,5.5,0,0,Math.PI*2);ctx.ellipse(40,25,4.3,5.5,0,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#25354d';ctx.beginPath();ctx.arc(21,26,1.8,0,Math.PI*2);ctx.arc(39,26,1.8,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(19,23,1.5,0,Math.PI*2);ctx.arc(38,23,1.5,0,Math.PI*2);ctx.fill();
+ ctx.strokeStyle='#9b7488';ctx.lineWidth=1.3;ctx.beginPath();ctx.moveTo(27,34);ctx.lineTo(30,36);ctx.lineTo(33,34);ctx.stroke();
+ ctx.fillStyle='#f0a0c4';ctx.beginPath();ctx.arc(14,34,4,0,Math.PI*2);ctx.arc(46,34,4,0,Math.PI*2);ctx.fill();
+ // signature coquette bow
+ ctx.fillStyle='#ef91bd';ctx.strokeStyle='#fff4fa';ctx.lineWidth=1.4;ctx.beginPath();ctx.moveTo(30,13);ctx.bezierCurveTo(15,1,16,17,28,16);ctx.bezierCurveTo(18,28,31,24,31,17);ctx.bezierCurveTo(44,26,47,12,33,14);ctx.closePath();ctx.fill();ctx.stroke();
+ ctx.fillStyle='#ffeaa9';ctx.beginPath();ctx.arc(31,16,3,0,Math.PI*2);ctx.fill();
+ ctx.restore()}
+function star(x,y,r=14){ctx.save();ctx.translate(x,y);ctx.rotate(frame*.035);ctx.fillStyle='#ffe878';ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.beginPath();for(let i=0;i<10;i++){let a=i*Math.PI/5-Math.PI/2,rad=i%2?r*.48:r;ctx.lineTo(Math.cos(a)*rad,Math.sin(a)*rad)}ctx.closePath();ctx.fill();ctx.stroke();ctx.restore()}
+function heart(x,y,size=16){ctx.save();ctx.translate(x,y);ctx.fillStyle='#ff80b9';ctx.beginPath();ctx.moveTo(0,size*.35);ctx.bezierCurveTo(-size,-size*.2,-size*.7,-size*.9,0,-size*.35);ctx.bezierCurveTo(size*.7,-size*.9,size,-size*.2,0,size*.35);ctx.fill();ctx.restore()}
+function background(){let g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#c7f1ff');g.addColorStop(.68,'#fff0fa');g.addColorStop(1,'#ffd4e9');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+ for(let i=0;i<22;i++){ctx.fillStyle=i%3?'#fff':'#fff0a8';ctx.font='18px sans-serif';ctx.fillText(i%4?'✦':'♡',(i*113-frame*.25+W*3)%W,(i*67)%280)}
+ for(let i=0;i<5;i++){let a=(i*190-frame*.35+W*2)%950-60,b=70+(i%3)*43;ctx.fillStyle='#ffffffb8';ctx.beginPath();ctx.arc(a,b,20,0,7);ctx.arc(a+23,b-8,27,0,7);ctx.arc(a+49,b,19,0,7);ctx.fill()}
+}
+function draw(){ctx.clearRect(0,0,W,H);background();
+ if(mode==='jump'){rr(0,ground,W,H-ground,0,'#f3b9df');for(let i=0;i<7;i++){let px=(i*150-frame*speed*.35+1500)%950-70;rr(px,ground-12,80,13,7,'#fff8ff')}obstacles.forEach(o=>{rr(o.x,o.y,o.w,o.h,12,'#c2b0f3');ctx.fillStyle='#fff';ctx.font='18px sans-serif';ctx.fillText('☁',o.x+4,o.y+22)});stars.forEach(s=>{if(!s.got)star(s.x,s.y)});drawCat(cat.x,cat.y)}
+ if(mode==='catch'){rr(0,410,W,40,0,'#f3b9df');stars.forEach(s=>{if(!s.got){if(s.kind==='gift'){rr(s.x-12,s.y-11,24,22,5,'#ff9fc9');ctx.fillStyle='#fff';ctx.fillRect(s.x-3,s.y-11,6,22);ctx.fillRect(s.x-12,s.y-3,24,5);ctx.font='14px sans-serif';ctx.fillText('🎀',s.x-9,s.y-16)}else heart(s.x,s.y,17)}});obstacles.forEach(o=>{ctx.fillStyle='#c3b2ed';ctx.beginPath();ctx.arc(o.x,o.y,18,0,7);ctx.arc(o.x+18,o.y-8,23,0,7);ctx.arc(o.x+38,o.y,18,0,7);ctx.fill();ctx.fillStyle='#8c76a7';ctx.font='15px sans-serif';ctx.fillText('⚡',o.x+8,o.y+4)});drawCat(cat.x,340);ctx.fillStyle='#a45f87';ctx.font='bold 15px sans-serif';ctx.fillText('♡ '.repeat(lives),20,30)}
+ if(mode==='pop'){bubbles.forEach(b=>{ctx.globalAlpha=.82;ctx.fillStyle=b.color;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,7);ctx.fill();ctx.globalAlpha=1;ctx.strokeStyle='#fff';ctx.lineWidth=3;ctx.stroke();ctx.fillStyle='#fff';ctx.font='18px sans-serif';ctx.fillText(b.kind==='rare'?'✧':b.kind==='heart'?'♡':'✦',b.x-7,b.y+6)});drawCat(372,340);ctx.fillStyle='#a45f87';ctx.font='bold 17px sans-serif';ctx.fillText('TIME '+Math.max(0,Math.ceil(seconds))+'s',18,30);ctx.fillText('COMBO x'+Math.max(1,combo),670,30)}
+ particles.forEach(p=>{ctx.globalAlpha=Math.max(0,p.life/25);ctx.fillStyle=p.color;ctx.font='18px sans-serif';ctx.fillText(p.symbol,p.x,p.y);ctx.globalAlpha=1});
+ if(!running&&!dead){ctx.fillStyle='#76527f';ctx.textAlign='center';ctx.font='bold 27px Trebuchet MS';ctx.fillText(({jump:'BOOBOO’S DREAMLAND',catch:'PAWS & PRESENTS',pop:'BUBBLE TEA PARTY'})[mode],400,205);ctx.font='bold 15px Trebuchet MS';ctx.fillText('PRESS PLAY TO BEGIN ♡',400,235);ctx.textAlign='left'}
+ if(dead){ctx.fillStyle='#76527f';ctx.textAlign='center';ctx.font='bold 29px Trebuchet MS';ctx.fillText(mode==='pop'?'PARTY COMPLETE! ✧':'ROUND OVER ♡',400,205);ctx.font='bold 16px Trebuchet MS';ctx.fillText('SCORE '+score+'  ·  TAP RETRY TO PLAY AGAIN',400,235);ctx.textAlign='left'}
+}
+function burst(x,y,color,symbol='✦',n=5){for(let i=0;i<n;i++)particles.push({x:x+(Math.random()-.5)*35,y:y+(Math.random()-.5)*25,life:25,color,symbol})}
+function end(){running=false;dead=true;cancelAnimationFrame(animation);statusEl.textContent='ROUND OVER';startBtn.textContent='▶ PLAY';let old=0;try{old=Number(localStorage.getItem(bestKey())||0);if(score>old)localStorage.setItem(bestKey(),String(score))}catch(e){}updateBest();draw()}
+function loop(){if(!running)return;frame++;speed=Math.min(7.5,4+score/1800);
+ if(mode==='jump'){if(frame%68===0)obstacles.push({x:W+10,y:ground-37,w:28+Math.random()*20,h:37});if(frame%82===0)stars.push({x:W+10,y:225+Math.random()*75,got:false});obstacles.forEach(o=>o.x-=speed);stars.forEach(s=>s.x-=speed);obstacles=obstacles.filter(o=>o.x+o.w>-20);stars=stars.filter(s=>s.x>-25&&!s.got);cat.vy+=.62;cat.y+=cat.vy;if(cat.y>=310){cat.y=310;cat.vy=0;cat.onGround=true;cat.jumps=0}for(const o of obstacles){if(cat.x+cat.w-8>o.x&&cat.x+8<o.x+o.w&&cat.y+cat.h-8>o.y){end();return}}for(const s of stars)if(!s.got&&Math.abs(cat.x+29-s.x)<30&&Math.abs(cat.y+28-s.y)<35){s.got=true;addScore(100);burst(s.x,s.y,'#ffe878')}}
+ if(mode==='catch'){if(keys.ArrowLeft||keys.KeyA)cat.x-=5.5;if(keys.ArrowRight||keys.KeyD)cat.x+=5.5;cat.x=Math.max(0,Math.min(742,cat.x));if(frame%36===0)stars.push({x:20+Math.random()*760,y:-20,kind:Math.random()<.45?'gift':'heart',got:false});if(frame%105===0)obstacles.push({x:25+Math.random()*750,y:-25});stars.forEach(s=>s.y+=3.4);obstacles.forEach(o=>o.y+=2.8);stars=stars.filter(s=>s.y<465&&!s.got);obstacles=obstacles.filter(o=>o.y<465);for(const s of stars)if(!s.got&&Math.abs(s.x-(cat.x+29))<36&&Math.abs(s.y-365)<37){s.got=true;addScore(s.kind==='gift'?150:100);burst(s.x,s.y,'#ff91c4',s.kind==='gift'?'🎀':'♡',7)}for(const o of obstacles)if(Math.abs(o.x+20-(cat.x+29))<38&&Math.abs(o.y-365)<34){obstacles=obstacles.filter(v=>v!==o);lives--;burst(cat.x+30,360,'#bba5ef','♡',7);if(lives<=0){end();return}}}
+ if(mode==='pop'){seconds-=1/60;if(frame%24===0)bubbles.push({x:30+Math.random()*740,y:465,r:17+Math.random()*15,color:['#ff90ce','#bda7ff','#8be6ef','#ffdf82'][Math.floor(Math.random()*4)],kind:Math.random()<.12?'rare':Math.random()<.2?'heart':'normal'});bubbles.forEach(b=>b.y-=2.3+Math.random()*.5);bubbles=bubbles.filter(b=>b.y>-35);if(seconds<=0){seconds=0;end();return}}
+ particles.forEach(p=>{p.y-=1;p.life--});particles=particles.filter(p=>p.life>0);if(frame%8===0){scoreEl.textContent='SCORE '+String(score).padStart(4,'0');if(mode==='pop')statusEl.textContent=Math.ceil(seconds)+' SEC · COMBO '+combo;else if(mode==='catch')statusEl.textContent=lives+' HEARTS';else statusEl.textContent='LEVEL '+(1+Math.floor(score/1000))}
+ draw();animation=requestAnimationFrame(loop)}
+function pointer(e){const r=canvas.getBoundingClientRect(),px=(e.clientX-r.left)*W/r.width,py=(e.clientY-r.top)*H/r.height;if(!running){begin();return}if(mode==='pop'){let idx=-1;for(let i=bubbles.length-1;i>=0;i--)if(Math.hypot(px-bubbles[i].x,py-bubbles[i].y)<bubbles[i].r+7){idx=i;break}if(idx>=0){const b=bubbles.splice(idx,1)[0];combo=frame-lastPop<75?combo+1:1;lastPop=frame;addScore((b.kind==='rare'?300:b.kind==='heart'?200:75)*Math.min(combo,5));burst(b.x,b.y,b.color,b.kind==='rare'?'✧':'♡',8);statusEl.textContent=combo>1?'COMBO x'+combo+'!':'NICE POP!'}else{combo=0}}else if(mode==='jump'){jump()}else{cat.x=Math.max(0,Math.min(742,px-29))}}
 document.querySelectorAll('.mode').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
-startBtn.addEventListener('click',()=>{if(running){running=false;statusEl.textContent='PAUSED';startBtn.textContent='▶ RESUME'}else start()});
-actionBtn.addEventListener('click',()=>{if(mode==='jump')jump();else if(mode==='catch'){p.x=Math.min(745,p.x+45);if(!running)start()}else{if(!running)start();score+=50}});
-document.getElementById('reset').addEventListener('click',reset);c.addEventListener('pointerdown',pointer);
-window.addEventListener('keydown',e=>{keys[e.code]=true;if(['Space','ArrowUp','KeyW'].includes(e.code)&&mode==='jump'){e.preventDefault();jump()}if(e.code==='Space'&&mode==='pop'){score+=50;if(!running)start()}});
-window.addEventListener('keyup',e=>keys[e.code]=false);
+startBtn.addEventListener('click',()=>{if(running)pause();else begin()});
+actionBtn.addEventListener('click',()=>{if(mode==='jump')jump();else if(mode==='catch'){if(!running)begin();cat.x=Math.min(742,cat.x+90);burst(cat.x,365,'#ff9fc9','✧',5)}else{if(!running)begin();let b=bubbles.pop();if(b){combo=frame-lastPop<75?combo+1:1;lastPop=frame;addScore(100*Math.min(combo,5));burst(b.x,b.y,b.color,'♡',8)}}});
+document.getElementById('reset').addEventListener('click',reset);canvas.addEventListener('pointerdown',pointer);
+window.addEventListener('keydown',e=>{keys[e.code]=true;if(['Space','ArrowUp','KeyW'].includes(e.code)&&mode==='jump'){e.preventDefault();jump()}if(mode==='pop'&&e.code==='Space'&&running){const b=bubbles.pop();if(b){combo=frame-lastPop<75?combo+1:1;lastPop=frame;addScore(100*Math.min(combo,5));burst(b.x,b.y,b.color,'♡',8)}}});window.addEventListener('keyup',e=>keys[e.code]=false);
 setMode('jump');
 })();
 </script></body></html>
