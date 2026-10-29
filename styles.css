@@ -165,3 +165,6 @@ body:has(#game.active-view) main{width:100%;max-width:none;margin:0;padding:0}
  #game .mobile-keys button{height:44px}
  #game .game-hint{display:none}
 }
+
+/* Critical: let the countdown overlay disappear when JS sets hidden=true */
+#game .countdown[hidden]{display:none!important;}
