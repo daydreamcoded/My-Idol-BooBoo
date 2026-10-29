@@ -20,6 +20,26 @@
 .lane-key{font-size:16px}.lane-key:active{background:#fce0ef;transform:translateX(-50%) scale(.94)}
 .mobile-keys button:active{background:#fce0ef;transform:scale(.97)}
 @media(max-width:560px){.hero-sticker img{height:260px}.idol-mini{justify-content:center}.game-avatar-bar{font-size:10px}}
+
+/* K-pop concert stage polish */
+.rhythm-board{background:radial-gradient(ellipse at 50% 0%,#7136a5 0%,#32135f 58%,#170b35 100%);border:2px solid #d66cff;box-shadow:inset 0 0 35px #ff5bd944,0 0 24px #a83aff55}
+.rhythm-board:before{color:#ffb9f4;text-shadow:0 0 12px #ff54e8}
+.lane{border-color:#c66bff55;background:linear-gradient(180deg,#ffffff08,#b34dff20)}
+.lane:nth-child(2),.lane:nth-child(4){background:linear-gradient(180deg,#d8a2ff10,#ff4fcf25)}
+.hit-line{background:linear-gradient(90deg,#ff66c8,#8ceaff,#b7ff8c,#ffe46f);box-shadow:0 0 18px #ff64e9,0 0 28px #65eaff}
+.lane-key{background:#251044;color:#fff;border:2px solid #f5a4ff;box-shadow:0 0 13px #d95cff88;font-size:18px;text-shadow:0 0 9px #ff8ce7}
+.lane-0 .note{background:linear-gradient(90deg,#ff4fa8,#ff9ae0);box-shadow:0 0 20px #ff4fa8}
+.lane-1 .note{background:linear-gradient(90deg,#29d8ff,#9aeaff);box-shadow:0 0 20px #29d8ff}
+.lane-2 .note{background:linear-gradient(90deg,#9dff65,#d7ff9e);box-shadow:0 0 20px #9dff65}
+.lane-3 .note{background:linear-gradient(90deg,#ffc84e,#fff0a0);box-shadow:0 0 20px #ffc84e}
+.lane-0 .note:after{content:'←';right:8px;color:#fff;font-size:17px;font-weight:900}
+.lane-1 .note:after{content:'↓';right:8px;color:#fff;font-size:17px;font-weight:900}
+.lane-2 .note:after{content:'↑';right:8px;color:#fff;font-size:17px;font-weight:900}
+.lane-3 .note:after{content:'→';right:8px;color:#fff;font-size:17px;font-weight:900}
+.hit-feedback{color:#fff;text-shadow:0 0 12px #ff4edb,0 2px 4px #24103c}
+.countdown{background:#18072f99;color:#fff;text-shadow:0 0 22px #ff4edb}
+@media(max-width:560px){.rhythm-board{border-radius:16px}.lane-key{font-size:15px}}
+
 </style>
 </head>
 <body>
@@ -27,7 +47,7 @@
 <header class="topbar">
  <a class="brand" href="#" data-goto="home"><span class="brand-icon">♡</span><b>MY IDOL, BOOBOO</b></a>
  <nav aria-label="Main navigation">
-  <button class="nav-btn active" data-view="home">Home</button><button class="nav-btn" data-view="songs">Play</button><button class="nav-btn" data-view="cards">Photocards <span class="tiny-count" id="cardCount">1/6</span></button><button class="nav-btn" data-view="room">Idol Room</button><button class="nav-btn" data-view="quests">Missions</button>
+  <button class="nav-btn active" data-view="home">Home</button><button class="nav-btn" data-view="songs">Play</button><button class="nav-btn" data-view="cards">Photocards <span class="tiny-count" id="cardCount">1/6</span></button><button class="nav-btn" data-view="room">Idol Room</button><button class="nav-btn" data-view="quests">Missions</button><button class="nav-btn" data-view="settings">Settings</button>
  </nav>
  <button class="sound-toggle" id="soundToggle">♫ <span>Sound on</span></button>
 </header>
@@ -37,7 +57,7 @@
   <div class="hero-copy">
    <p class="eyebrow"><span class="live-dot"></span> YOUR ONE AND ONLY CAT IDOL</p>
    <h1>BOO BOO<br><span class="gradient-text">WORLD TOUR</span><span class="twinkle">✦</span></h1>
-   <p class="tagline">The stage is hers. The brain cell is optional.</p>
+   <p class="tagline">The stage is BooBoo’s. The brain cell is optional.</p>
    <p class="intro">Four lanes. Questionable dance moves. One extremely fluffy superstar. Tap the arrows to the beat and help BooBoo survive her world tour.</p>
    <div class="hero-actions"><button class="primary-btn" id="startBtn">♡ Start the concert</button><button class="secondary-btn" data-goto="cards">View photocards</button></div>
    <div class="mini-stats"><div><strong id="homeBest">0</strong><span>PERSONAL BEST</span></div><div><strong id="homeCards">1 / 6</strong><span>PHOTOCARDS</span></div><div><strong>∞</strong><span>MEOWS PER MINUTE</span></div></div>
