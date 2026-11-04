@@ -47,7 +47,7 @@
 <header class="topbar">
  <a class="brand" href="#" data-goto="home"><span class="brand-icon">♡</span><b>MY IDOL, BOOBOO</b></a>
  <nav aria-label="Main navigation">
-  <button class="nav-btn active" data-view="home">Home</button><button class="nav-btn" data-view="songs">Play</button><button class="nav-btn" data-view="cards">Photocards <span class="tiny-count" id="cardCount">1/6</span></button><button class="nav-btn" data-view="room">Idol Room</button><button class="nav-btn" data-view="quests">Missions</button><button class="nav-btn" data-view="settings">Settings</button>
+  <button class="nav-btn active" data-view="home">Home</button><button class="nav-btn" data-view="songs">Play</button><button class="nav-btn" data-view="settings">Settings</button>
  </nav>
  <button class="sound-toggle" id="soundToggle">♫ <span>Sound on</span></button>
 </header>
@@ -59,10 +59,8 @@
    <h1>BOO BOO<br><span class="gradient-text">WORLD TOUR</span><span class="twinkle">✦</span></h1>
    <p class="tagline">The stage is BooBoo’s. The brain cell is optional.</p>
    <p class="intro">Four lanes. Questionable dance moves. One fluffy superstar. Tap the arrows to the beat and help BooBoo dominate his world tour.</p>
-   <div class="hero-actions"><button class="primary-btn" id="startBtn">♡ Start the concert</button><button class="secondary-btn" data-goto="cards">View photocards</button></div>
-   <div class="mini-stats"><div><strong id="homeBest">0</strong><span>PERSONAL BEST</span></div><div><strong id="homeCards">1 / 6</strong><span>PHOTOCARDS</span></div><div><strong>∞</strong><span>MEOWS PER MINUTE</span></div></div>
-  </div>
-  <div class="hero-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-sticker"><img src="assets/booboo-idol.png" alt="BooBoo, the real fluffy seal-point cat idol"></div><span class="sticker-burst burst-a">✧</span><span class="sticker-burst burst-b">♡</span><span class="floating-label label-top">LEGENDARY VISUAL</span><span class="floating-label label-bottom">100% CAT. 0% CHILL.</span></div>
+   <div class="hero-actions"><button class="primary-btn" id="startBtn">♡ Start the concert</button></div>
+   <div class="mini-stats"><div><strong id="homeBest">0</strong><span>PERSONAL BEST</span></div><div><strong>∞</strong><span>MEOWS PER MINUTE</span></div></div></div><div class="hero-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-sticker"><img src="assets/booboo-idol.png" alt="BooBoo, the real fluffy seal-point cat idol"></div><span class="sticker-burst burst-a">✧</span><span class="sticker-burst burst-b">♡</span><span class="floating-label label-top">LEGENDARY VISUAL</span><span class="floating-label label-bottom">100% CAT. 0% CHILL.</span></div>
  </div>
  <div class="section-heading"><div><p class="eyebrow">PICK YOUR POISON (MUSICAL)</p><h2>Choose your next obsession</h2></div><span class="heading-spark">✧ ♡ ✧</span></div>
  <div class="feature-grid">
@@ -92,26 +90,7 @@
  <div class="game-bottom"><div class="progress-track"><div id="songProgress"></div></div><p class="game-hint">Use <kbd>←</kbd> <kbd>↓</kbd> <kbd>↑</kbd> <kbd>→</kbd> or tap the big buttons when notes reach the line!</p><div class="mobile-keys"><button data-lane="0" aria-label="Left arrow">←</button><button data-lane="1" aria-label="Down arrow">↓</button><button data-lane="2" aria-label="Up arrow">↑</button><button data-lane="3" aria-label="Right arrow">→</button></div></div>
 </section>
 <section class="view" id="results">
- <div class="results-panel"><div class="results-confetti">✦ ♡ ✧ ♡ ✦</div><p class="eyebrow">THE FANDOM HAS SPOKEN</p><h1>STAGE <span class="gradient-text">COMPLETE!</span></h1><p class="result-subtitle" id="resultSong">Pink Stardust</p><div class="grade-bubble" id="grade">A</div><div class="result-stats"><div><span>FINAL SCORE</span><strong id="resultScore">0</strong></div><div><span>ACCURACY</span><strong id="resultAccuracy">0%</strong></div><div><span>MAX COMBO</span><strong id="resultCombo">0</strong></div></div><p class="unlock-message" id="unlockMessage">BooBoo is judging your performance.</p><div class="hero-actions centered"><button class="primary-btn" id="againBtn">↻ Play again</button><button class="secondary-btn" data-goto="cards">My photocards</button><button class="secondary-btn" data-goto="home">Home</button></div></div>
-</section>
-<section class="view" id="cards">
- <div class="page-heading"><p class="eyebrow">LIMITED EDITION CAT CONTENT</p><h1>The <span class="gradient-text">photocard</span> album</h1><p>Every stage unlocks another extremely collectible BooBoo moment.</p></div>
- <div class="album-progress"><div><strong id="albumCount">1 of 6 collected</strong><span>THE BOOBOO COLLECTION</span></div><div class="progress-track"><div id="albumProgress"></div></div></div>
- <div class="card-grid" id="cardGrid"></div>
- <div class="album-artwork"><img src="assets/booboo-idol.png" alt="BooBoo"><div><p class="eyebrow">THE ORIGINAL VISUAL</p><h3>BooBoo ♡</h3><p>Fluffy coat, blue eyes, tiny pink nose, and the confidence of an idol with a sold-out world tour.</p></div></div>
-</section>
-<section class="view" id="room">
- <div class="page-heading"><p class="eyebrow">BACKSTAGE ACCESS</p><h1>BooBoo's <span class="gradient-text">idol dorm</span></h1><p>Choose a room concept for the world's most demanding fluffy superstar.</p></div>
- <div class="room-layout"><div class="room-scene" id="roomScene"><div class="room-window">☾ ✦</div><div class="wall-poster">BOO<br>BOO ♡</div><div class="wall-poster poster-two">WORLD<br>TOUR</div><div class="shelf"><span>🎀</span><span>💿</span><span>🌷</span></div><div class="decor-light">✧ ♡ ✧</div><div class="bed"><div class="pillow"></div><span class="bed-label">BOOBOO'S BED</span></div><div class="room-cat"><img class="idol-photo" src="assets/booboo-idol.png" alt="BooBoo"></div><div class="floor-rug"></div><div class="room-decor decor-plant">❀</div></div>
- <div class="decor-panel"><h3>Pick a concept</h3><button class="decor-option active" data-room="pink"><span class="swatch swatch-pink"></span><span><b>Pink Dream</b><small>Soft and sweet</small></span><span class="check">✓</span></button><button class="decor-option" data-room="lavender"><span class="swatch swatch-lavender"></span><span><b>Lavender Stage</b><small>Dreamy superstar</small></span><span class="check">✓</span></button><button class="decor-option" data-room="silver"><span class="swatch swatch-silver"></span><span><b>Silver Era</b><small>Cool concept queen</small></span><span class="check">✓</span></button><p class="room-tip">BooBoo requested a bigger bed, a personal stylist, and unlimited treats. The budget committee said no.</p></div></div>
-</section>
-<section class="view" id="quests">
- <div class="page-heading"><p class="eyebrow">DAILY IDOL SCHEDULE</p><h1>Fan club <span class="gradient-text">missions</span></h1><p>Little goals for your favorite little celebrity.</p></div>
- <div class="quest-list">
-  <article class="quest-card"><span class="quest-icon">♫</span><div><h3>Make your debut</h3><p>Finish one rhythm stage.</p><div class="quest-track"><span id="questSongProgress"></span></div></div><span class="quest-status" id="questSongStatus">0/1</span></article>
-  <article class="quest-card"><span class="quest-icon">✦</span><div><h3>Go viral (in the living room)</h3><p>Reach a score of 1,000 in one song.</p><div class="quest-track"><span id="questScoreProgress"></span></div></div><span class="quest-status" id="questScoreStatus">0/1</span></article>
-  <article class="quest-card"><span class="quest-icon">▣</span><div><h3>Collect the rookie set</h3><p>Unlock three photocards.</p><div class="quest-track"><span id="questCardProgress"></span></div></div><span class="quest-status" id="questCardStatus">1/3</span></article>
- </div>
+ <div class="results-panel"><div class="results-confetti">✦ ♡ ✧ ♡ ✦</div><p class="eyebrow">THE FANDOM HAS SPOKEN</p><h1>STAGE <span class="gradient-text">COMPLETE!</span></h1><p class="result-subtitle" id="resultSong">Pink Stardust</p><div class="grade-bubble" id="grade">A</div><div class="result-stats"><div><span>FINAL SCORE</span><strong id="resultScore">0</strong></div><div><span>ACCURACY</span><strong id="resultAccuracy">0%</strong></div><div><span>MAX COMBO</span><strong id="resultCombo">0</strong></div></div><p class="unlock-message" id="unlockMessage">BooBoo is judging your performance.</p><div class="hero-actions centered"><button class="primary-btn" id="againBtn">↻ Play again</button><button class="secondary-btn" data-goto="home">Home</button></div></div>
 </section>
 <section class="view" id="settings">
  <div class="page-heading"><p class="eyebrow">THE MANAGEMENT OFFICE</p><h1>Settings</h1><p>Make the concert feel right for you.</p></div>
@@ -120,5 +99,6 @@
 </main>
 <div class="modal-backdrop" id="modalBackdrop" hidden><div class="modal"><button class="modal-close" id="closeModal" aria-label="Close">×</button><div id="modalContent"></div></div></div>
 <div class="toast" id="toast"></div>
-<script src="charts.js?v=audio-charts-1"></script>\n<script src="game.js?v=real-kpop-audio-1"></script>
+<script src="charts.js?v=audio-charts-1"></script>
+<script src="game.js?v=real-kpop-audio-1"></script>
 </body></html>
