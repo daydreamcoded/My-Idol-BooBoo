@@ -35,7 +35,7 @@
   function selectSong(id){currentSong=id;$('.song-card').forEach(c=>c.classList.toggle('selected',c.dataset.song===id));$('[data-play-song]').forEach(b=>{b.className='song-play '+(b.dataset.playSong===id?'primary-btn':'secondary-btn')});}
   $$('[data-play-song]').forEach(b=>b.addEventListener('click',()=>{selectSong(b.dataset.playSong);startGame()}));
   $('#againBtn').addEventListener('click',()=>{showView('songs');startGame()});
-  $('#soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('#soundToggle').innerHTML=`♫ <span>${soundOn?'Sound on':'Sound off'}</span>`;if(masterGain)masterGain.gain.value=soundOn?0.22:0;});
+  $('#soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('#soundToggle').innerHTML=`♫ <span>${soundOn?'Sound on':'Sound off'}</span>`;if(masterGain)masterGain.gain.value=soundOn?0.22:0;if(game&&game.audio)game.audio.volume=soundOn?0.9:0;});
   $('#sfxSetting').checked=state.sfx;$('#sfxSetting').addEventListener('change',e=>{state.sfx=e.target.checked;save();});
   $('#motionSetting').checked=state.reducedMotion;$('#motionSetting').addEventListener('change',e=>{state.reducedMotion=e.target.checked;document.body.classList.toggle('reduce-motion',state.reducedMotion);save();});
   function audioInit(){if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioCtx=new AC();masterGain=audioCtx.createGain();masterGain.gain.value=soundOn?0.22:0;masterGain.connect(audioCtx.destination);}if(audioCtx.state==='suspended')audioCtx.resume();}
