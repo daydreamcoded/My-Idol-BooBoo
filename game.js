@@ -21,7 +21,7 @@
   function closeModal(){ $('#modalBackdrop').hidden=true; }
   $('#closeModal').addEventListener('click',closeModal); $('#modalBackdrop').addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});
   function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400)}
-  $$$('.song-card').forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('button'))return;selectSong(card.dataset.song)}));
+  $('.song-card').forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('button'))return;selectSong(card.dataset.song)}));
   function selectSong(id){currentSong=id;$$('.song-card').forEach(c=>c.classList.toggle('selected',c.dataset.song===id));$$('[data-play-song]').forEach(b=>{b.className='song-play '+(b.dataset.playSong===id?'primary-btn':'secondary-btn')});}
   $$('[data-play-song]').forEach(b=>b.addEventListener('click',()=>{selectSong(b.dataset.playSong);startGame()}));
   $('#againBtn').addEventListener('click',()=>{showView('songs');startGame()});
