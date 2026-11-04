@@ -11,10 +11,10 @@
   const fresh = () => ({best:0, songsPlayed:0, totalScore:0, sfx:true, reducedMotion:false});
   let state = loadState(), currentSong='magnetic', game=null, audioCtx=null, masterGain=null, audioTimer=null, toastTimer=null;
   let soundOn = true;
-  function loadState(){ try { const v=JSON.parse(localStorage.getItem(SAVE_KEY)); if(v && Array.isArray(v.unlocked)) return {...fresh(),...v}; } catch(e){} return fresh(); }
+  function loadState(){ try { const v=JSON.parse(localStorage.getItem(SAVE_KEY)); if(v && typeof v==='object') return {...fresh(),...v}; } catch(e){} return fresh(); }
   function save(){ try { localStorage.setItem(SAVE_KEY,JSON.stringify(state)); } catch(e){} updateStats(); }
   function updateStats(){ $("#homeBest").textContent=state.best.toLocaleString(); }
-  function showView(id){ if(game && id!=='game' && id!=='results') stopGame(); $$('.view').forEach(v=>v.classList.toggle('active-view',v.id===id)); $$('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===id)); window.scrollTo({top:0,behavior:state.reducedMotion?'auto':'smooth'}); if(id==='room') applyRoom(state.room); }
+  function showView(id){ if(game && id!=='game' && id!=='results') stopGame(); $$('.view').forEach(v=>v.classList.toggle('active-view',v.id===id)); $$('.nav-btn').forEach(b=>b.classList.toggle('active',b.dataset.view===id)); window.scrollTo({top:0,behavior:state.reducedMotion?'auto':'smooth'}); }
   document.addEventListener('click', e=>{const goto=e.target.closest('[data-goto]');if(goto) showView(goto.dataset.goto);const nav=e.target.closest('[data-view]');if(nav) showView(nav.dataset.view);});
   $('#startBtn').addEventListener('click',()=>showView('songs'));
   function showModal(){ $('#modalBackdrop').hidden=false; }
