@@ -21,9 +21,9 @@
   function closeModal(){ $('#modalBackdrop').hidden=true; }
   $('#closeModal').addEventListener('click',closeModal); $('#modalBackdrop').addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});
   function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400)}
-  $$('.song-card').forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('button'))return;selectSong(card.dataset.song)}));
-  function selectSong(id){currentSong=id;$('.song-card').forEach(c=>c.classList.toggle('selected',c.dataset.song===id));$('[data-play-song]').forEach(b=>{b.className='song-play '+(b.dataset.playSong===id?'primary-btn':'secondary-btn')});}
-  $$('[data-play-song]').forEach(b=>b.addEventListener('click',()=>{selectSong(b.dataset.playSong);startGame()}));
+  $$$('.song-card').forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('button'))return;selectSong(card.dataset.song)}));
+  function selectSong(id){currentSong=id;$$('.song-card').forEach(c=>c.classList.toggle('selected',c.dataset.song===id));$$('[data-play-song]').forEach(b=>{b.className='song-play '+(b.dataset.playSong===id?'primary-btn':'secondary-btn')});}
+  $$$('[data-play-song]').forEach(b=>b.addEventListener('click',()=>{selectSong(b.dataset.playSong);startGame()}));
   $('#againBtn').addEventListener('click',()=>{showView('songs');startGame()});
   $('#soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('#soundToggle').innerHTML=`♫ <span>${soundOn?'Sound on':'Sound off'}</span>`;if(masterGain)masterGain.gain.value=soundOn?0.22:0;if(game&&game.audio)game.audio.volume=soundOn?0.9:0;});
   $('#sfxSetting').checked=state.sfx;$('#sfxSetting').addEventListener('change',e=>{state.sfx=e.target.checked;save();});
