@@ -43,6 +43,7 @@
         audio.play().then(()=>gameLoop()).catch(()=>{feedback('TAP TO START AUDIO');session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='TAP TO PLAY';$('#countdown').onclick=()=>{audio.play().then(()=>{$('#countdown').hidden=true;session.running=true;session.start=performance.now();gameLoop();});};});
       }};
     session.countdownTimer=setTimeout(tick,650);
+    audio.addEventListener('error',()=>{if(game===session){session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='AUDIO FILES NOT FOUND';feedback('UPLOAD THE MP3 FILES TO GITHUB');}});
     audio.addEventListener('ended',()=>{if(game===session)finishGame();});
   }
   function gameLoop(){
