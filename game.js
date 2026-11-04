@@ -33,7 +33,7 @@
   function startGame(){
     stopGame(); const s=songData[currentSong];
     const audio=new Audio(s.file); audio.preload='auto'; audio.volume=soundOn?0.9:0;
-    game={running:false,paused:false,start:0,elapsed:0,duration:30,score:0,combo:0,maxCombo:0,hits:0,misses:0,total:0,notes:[],next:0,noteIndex:0,audio,chart:s.chart||[]};
+    game={running:false,paused:false,start:0,elapsed:0,duration:30,score:0,combo:0,maxCombo:0,hits:0,misses:0,total:0,notes:[],next:0,noteIndex:0,audio,chart:s.chart||[],danceStep:0,lastDanceTime:-10};
     const board=$('#rhythmBoard'); $$('.note',board).forEach(n=>n.remove());
     $('#score').textContent='000000'; $('#combo').textContent='0'; $('#accuracy').textContent='100%'; $('#songProgress').style.width='0%';
     $('#playingTitle').textContent=s.name.toUpperCase()+' · '+s.artist; $('#feedback').textContent='GET READY!'; $('#countdown').hidden=false;
@@ -63,16 +63,19 @@
       if(!note.danced && remaining<=0.045 && remaining>=-0.075){note.danced=true;danceOnBeat=true;}
       if(!note.done && remaining < -0.22){note.done=true;note.el.remove();game.misses++;game.combo=0;feedback('MISS');updateHud();}
     });
-    if(danceOnBeat)danceBooBoo();
+    if(danceOnBeat && audioTime-game.lastDanceTime>=0.46){game.lastDanceTime=audioTime;danceBooBoo();}
     game.notes=game.notes.filter(n=>!n.done);
     requestAnimationFrame(gameLoop);
   }
   function danceBooBoo(){
     const idol=$('.stage-booboo');
     if(!idol||document.body.classList.contains('reduce-motion'))return;
-    idol.classList.remove('dance-pop');
+    const moves=['dance-groove','dance-bounce','dance-twirl','dance-sway'];
+    idol.classList.remove(...moves);
+    game.danceStep=(game.danceStep+1)%moves.length;
+    const move=moves[game.danceStep];
     void idol.offsetWidth;
-    idol.classList.add('dance-pop');
+    idol.classList.add(move);
   }
   function spawnNote(lane,targetTime,travel){
     if(!game)return; const el=document.createElement('div');el.className='note';

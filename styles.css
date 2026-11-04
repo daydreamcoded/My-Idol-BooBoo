@@ -169,6 +169,16 @@ body:has(#game.active-view) main{width:100%;max-width:none;margin:0;padding:0}
 /* Critical: let the countdown overlay disappear when JS sets hidden=true */
 #game .countdown[hidden]{display:none!important;}
 
-/* BooBoo's beat-synced idol dance */
-#game .stage-booboo.dance-pop{animation:boobooBeatDance .34s cubic-bezier(.2,.8,.25,1);transform-origin:50% 78%;}
-@keyframes boobooBeatDance{0%{transform:translateX(-50%) rotate(0) translateY(0) scale(1)}22%{transform:translateX(-50%) rotate(-8deg) translateY(-9px) scale(1.035)}48%{transform:translateX(-50%) rotate(8deg) translateY(3px) scale(.985)}72%{transform:translateX(-50%) rotate(-5deg) translateY(-5px) scale(1.02)}100%{transform:translateX(-50%) rotate(0) translateY(0) scale(1)}}
+/* BooBoo's rotating mini-choreography: calmer timing, four distinct moves */
+#game .stage-booboo.dance-groove,
+#game .stage-booboo.dance-bounce,
+#game .stage-booboo.dance-twirl,
+#game .stage-booboo.dance-sway{transform-origin:50% 82%;will-change:transform}
+#game .stage-booboo.dance-groove{animation:boobooGroove .58s ease-in-out}
+#game .stage-booboo.dance-bounce{animation:boobooBounce .54s cubic-bezier(.2,.8,.3,1)}
+#game .stage-booboo.dance-twirl{animation:boobooTwirl .62s ease-in-out}
+#game .stage-booboo.dance-sway{animation:boobooSway .58s ease-in-out}
+@keyframes boobooGroove{0%,100%{transform:translateX(-50%) rotate(0) translateY(0) scale(1)}25%{transform:translateX(-50%) rotate(-10deg) translateY(-5px) scale(1.025)}50%{transform:translateX(-50%) rotate(0) translateY(0) scale(1)}75%{transform:translateX(-50%) rotate(10deg) translateY(-5px) scale(1.025)}}
+@keyframes boobooBounce{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}35%{transform:translateX(-50%) translateY(-16px) scale(1.045)}62%{transform:translateX(-50%) translateY(2px) scale(.985)}}
+@keyframes boobooTwirl{0%,100%{transform:translateX(-50%) rotate(0) scale(1)}28%{transform:translateX(-50%) rotate(-13deg) translateY(-5px) scale(1.02)}62%{transform:translateX(-50%) rotate(13deg) translateY(-3px) scale(1.02)}}
+@keyframes boobooSway{0%,100%{transform:translateX(-50%) rotate(0) translateY(0)}25%{transform:translateX(-50%) rotate(12deg) translateY(-3px)}50%{transform:translateX(-50%) rotate(0) translateY(-7px)}75%{transform:translateX(-50%) rotate(-12deg) translateY(-3px)}}
