@@ -168,3 +168,7 @@ body:has(#game.active-view) main{width:100%;max-width:none;margin:0;padding:0}
 
 /* Critical: let the countdown overlay disappear when JS sets hidden=true */
 #game .countdown[hidden]{display:none!important;}
+
+/* BooBoo's beat-synced idol dance */
+#game .stage-booboo.dance-pop{animation:boobooBeatDance .34s cubic-bezier(.2,.8,.25,1);transform-origin:50% 78%;}
+@keyframes boobooBeatDance{0%{transform:translateX(-50%) rotate(0) translateY(0) scale(1)}22%{transform:translateX(-50%) rotate(-8deg) translateY(-9px) scale(1.035)}48%{transform:translateX(-50%) rotate(8deg) translateY(3px) scale(.985)}72%{transform:translateX(-50%) rotate(-5deg) translateY(-5px) scale(1.02)}100%{transform:translateX(-50%) rotate(0) translateY(0) scale(1)}}

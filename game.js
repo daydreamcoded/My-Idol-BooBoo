@@ -48,27 +48,36 @@
   }
   function gameLoop(){
     if(!game||!game.running||game.paused)return;
-    const now=performance.now(), audioTime=game.audio.currentTime;
+    const audioTime=game.audio.currentTime;
     game.elapsed=audioTime; $('#songProgress').style.width=Math.min(100,audioTime/Math.max(1,game.duration)*100)+'%';
     if(game.audio.ended||audioTime>=game.duration){finishGame();return;}
     const travel=1.35;
     while(game.noteIndex<game.chart.length && game.chart[game.noteIndex].time<=audioTime+travel){
       const item=game.chart[game.noteIndex++]; spawnNote(item.lane,item.time,travel);
     }
-    const hitY=$('.hit-line').getBoundingClientRect().top;
+    let danceOnBeat=false;
     game.notes.forEach(note=>{
       const remaining=note.time-audioTime, progress=1-remaining/travel;
       const board=$('.rhythm-board'), top=progress*(board.clientHeight-100)-25;
       note.el.style.top=top+'px';
+      if(!note.danced && remaining<=0.045 && remaining>=-0.075){note.danced=true;danceOnBeat=true;}
       if(!note.done && remaining < -0.22){note.done=true;note.el.remove();game.misses++;game.combo=0;feedback('MISS');updateHud();}
     });
+    if(danceOnBeat)danceBooBoo();
     game.notes=game.notes.filter(n=>!n.done);
     requestAnimationFrame(gameLoop);
+  }
+  function danceBooBoo(){
+    const idol=$('.stage-booboo');
+    if(!idol||document.body.classList.contains('reduce-motion'))return;
+    idol.classList.remove('dance-pop');
+    void idol.offsetWidth;
+    idol.classList.add('dance-pop');
   }
   function spawnNote(lane,targetTime,travel){
     if(!game)return; const el=document.createElement('div');el.className='note';
     const laneEl=$$('.lane')[lane];laneEl.appendChild(el);el.style.top='-28px';
-    game.notes.push({lane,el,time:targetTime,done:false});
+    game.notes.push({lane,el,time:targetTime,done:false,danced:false});
   }
   function hitLane(lane){if(!game||!game.running||game.paused)return;const h=$('.hit-line').getBoundingClientRect().top;let best=null,dist=Infinity;game.notes.forEach(n=>{if(n.lane!==lane||n.done)return;const r=n.el.getBoundingClientRect();const d=Math.abs((r.top+r.height/2)-h);if(d<dist){dist=d;best=n;}});if(best&&dist<90){best.done=true;best.el.remove();game.hits++;game.total++;let pts,txt;if(dist<28){pts=100;txt='PERFECT!';game.combo++;}else if(dist<60){pts=65;txt='GREAT!';game.combo++;}else{pts=30;txt='GOOD!';game.combo++;}game.score+=pts+Math.min(game.combo,30)*2;game.maxCombo=Math.max(game.maxCombo,game.combo);feedback(txt);tone([659,784,988][Math.min(2,Math.floor(dist/30))],.08,'sine',.08);}else{game.misses++;game.combo=0;feedback('MISS');tone(180,.08,'triangle',.03);}updateHud();}
   function feedback(txt){$('#feedback').textContent=txt;$('#feedback').style.color=txt==='MISS'?'#ff8ab7':txt==='PERFECT!'?'#ffe45c':'#8eeeff';}
