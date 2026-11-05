@@ -39,7 +39,7 @@
     $('#score').textContent='000000'; $('#combo').textContent='0'; $('#accuracy').textContent='100%'; $('#songProgress').style.width='0%';
     $('#playingTitle').textContent=s.name.toUpperCase()+' · '+s.artist; $('.stage-booboo').src=s.image||'assets/booboo-idol.png'; $('.stage-booboo').alt='BooBoo performing '+s.name; $('.idol-photo-small').src=s.image||'assets/booboo-idol.png'; $('#feedback').textContent='GET READY!'; $('#countdown').hidden=false;
     showView('game'); let n=3; $('#countdown').textContent=n; const session=game;
-    const showAudioFailure=()=>{if(game!==session)return;session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='AUDIO FILE NOT FOUND';$('#countdown').onclick=null;feedback('ADD paranoid.mp3 TO assets/audio');};
+    const showAudioFailure=()=>{if(game!==session)return;session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='AUDIO COULD NOT LOAD';$('#countdown').onclick=null;feedback('CHECK AUDIO FILE / CONNECTION');};
     const beginPlayback=async()=>{
       if(game!==session)return;
       try{
