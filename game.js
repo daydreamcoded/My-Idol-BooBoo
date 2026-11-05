@@ -7,7 +7,7 @@
     magnetic: {name:'Magnetic', artist:'ILLIT', difficulty:'EASY', file:'assets/audio/magnetic.mp3', chart:window.BOOBOO_CHARTS.magnetic, image:'assets/booboo-idol.png'},
     era404: {name:'404 (New Era)', artist:'KiiiKiii', difficulty:'MEDIUM', file:'assets/audio/404-new-era.mp3', chart:window.BOOBOO_CHARTS.era404, image:'assets/booboo-idol.png'},
     ticktack: {name:'Tick-Tack', artist:'ILLIT', difficulty:'HARD', file:'assets/audio/tick-tack.mp3', chart:window.BOOBOO_CHARTS.ticktack, image:'assets/booboo-idol.png'},
-    paranoid: {name:'Paranoid', artist:'Black Sabbath', difficulty:'MEDIUM', file:'assets/audio/paranoid.mp3', chart:window.BOOBOO_CHARTS.paranoid, image:'assets/paranoid-rock.png'}
+    paranoid: {name:'Paranoid', artist:'Black Sabbath', difficulty:'MEDIUM', file:'assets/audio/black_sabbath_paranoid.mp3', chart:window.BOOBOO_CHARTS.paranoid, image:'assets/paranoid-rock.png'}
   };
   const fresh = () => ({best:0, songsPlayed:0, totalScore:0, sfx:true, reducedMotion:false});
   let state = loadState(), currentSong='magnetic', game=null, audioCtx=null, masterGain=null, audioTimer=null, toastTimer=null;
