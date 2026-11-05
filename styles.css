@@ -182,3 +182,41 @@ body:has(#game.active-view) main{width:100%;max-width:none;margin:0;padding:0}
 @keyframes boobooBounce{0%,100%{transform:translateX(-50%) translateY(0) scale(1)}35%{transform:translateX(-50%) translateY(-16px) scale(1.045)}62%{transform:translateX(-50%) translateY(2px) scale(.985)}}
 @keyframes boobooTwirl{0%,100%{transform:translateX(-50%) rotate(0) scale(1)}28%{transform:translateX(-50%) rotate(-13deg) translateY(-5px) scale(1.02)}62%{transform:translateX(-50%) rotate(13deg) translateY(-3px) scale(1.02)}}
 @keyframes boobooSway{0%,100%{transform:translateX(-50%) rotate(0) translateY(0)}25%{transform:translateX(-50%) rotate(12deg) translateY(-3px)}50%{transform:translateX(-50%) rotate(0) translateY(-7px)}75%{transform:translateX(-50%) rotate(-12deg) translateY(-3px)}}
+
+
+/* Sister / Brother song shelves */
+.category-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px;max-width:1100px;margin:24px auto 12px;padding:12px 18px;border:2px solid #f4a6dc;border-radius:18px;background:linear-gradient(100deg,#fff0fa,#f3eaff);box-shadow:0 8px 22px #b95e9b22;color:#a64c91;font:1000 22px 'Nunito',sans-serif;letter-spacing:.04em}
+.category-heading small{font-size:10px;letter-spacing:.18em;color:#9a76b4}
+.brother-heading{border-color:#b99be8;background:linear-gradient(100deg,#f5edff,#e9e1ff);color:#7651a9}
+.cover-retro{background:linear-gradient(145deg,#ffb55d,#f36e8d 48%,#7453bb)!important}
+.cover-y2k{background:linear-gradient(145deg,#c4f2ff,#7e9bdf 48%,#d7a6ff)!important}
+.cover-rock{background:radial-gradient(circle at 50% 15%,#82649d,#25152f 68%,#100a18)!important;color:#fff}
+.cover-rock strong{color:#fff!important;text-shadow:0 3px 8px #08040e}
+.cover-rock i,.cover-rock span{color:#ffcb62!important}
+.sister-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.brother-grid{grid-template-columns:minmax(220px,340px)}
+.song-card{min-width:0}
+@media(min-width:700px) and (max-width:1100px){
+ .song-grid{gap:14px}
+ .song-card{padding:12px}
+ .song-cover{min-height:145px}
+}
+@media(max-width:700px){
+ .category-heading{margin:16px 4px 10px;padding:10px 13px;font-size:18px}
+ .sister-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .brother-grid{grid-template-columns:minmax(0,1fr)}
+ .song-cover{min-height:125px}
+}
+@media(min-width:701px) and (max-width:1100px){
+ #game .game-hud{width:min(360px,40vw)}
+ #game .mobile-keys{max-width:900px;gap:16px}
+ #game .mobile-keys button{height:clamp(70px,11vh,100px);font-size:clamp(34px,5vh,48px);border-radius:24px}
+ #game .rhythm-board{top:19%;bottom:145px}
+ #game .game-bottom{bottom:12px}
+ #game .game-hint{font-size:12px}
+}
+@media(orientation:portrait) and (min-width:700px) and (max-width:1100px){
+ #game .rhythm-board{top:20%;bottom:155px}
+ #game .stage-booboo{width:94%;height:88%}
+ #game .mobile-keys button{height:84px}
+}

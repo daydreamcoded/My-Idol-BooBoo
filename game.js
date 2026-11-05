@@ -4,9 +4,10 @@
   const $$ = (s, root=document) => [...root.querySelectorAll(s)];
   const SAVE_KEY = 'myIdolBooBoo_v1';
   const songData = {
-    magnetic: {name:'Magnetic', artist:'ILLIT', difficulty:'EASY', file:'assets/audio/magnetic.mp3', chart:window.BOOBOO_CHARTS.magnetic},
-    era404: {name:'404 (New Era)', artist:'KiiiKiii', difficulty:'MEDIUM', file:'assets/audio/404-new-era.mp3', chart:window.BOOBOO_CHARTS.era404},
-    ticktack: {name:'Tick-Tack', artist:'ILLIT', difficulty:'HARD', file:'assets/audio/tick-tack.mp3', chart:window.BOOBOO_CHARTS.ticktack}
+    magnetic: {name:'Magnetic', artist:'ILLIT', difficulty:'EASY', file:'assets/audio/magnetic.mp3', chart:window.BOOBOO_CHARTS.magnetic, image:'assets/booboo-idol.png'},
+    era404: {name:'404 (New Era)', artist:'KiiiKiii', difficulty:'MEDIUM', file:'assets/audio/404-new-era.mp3', chart:window.BOOBOO_CHARTS.era404, image:'assets/booboo-idol.png'},
+    ticktack: {name:'Tick-Tack', artist:'ILLIT', difficulty:'HARD', file:'assets/audio/tick-tack.mp3', chart:window.BOOBOO_CHARTS.ticktack, image:'assets/booboo-idol.png'},
+    paranoid: {name:'Paranoid', artist:'Black Sabbath', difficulty:'MEDIUM', file:'assets/audio/paranoid.mp3', chart:window.BOOBOO_CHARTS.paranoid, image:'assets/outfits/paranoid-rock.png'}
   };
   const fresh = () => ({best:0, songsPlayed:0, totalScore:0, sfx:true, reducedMotion:false});
   let state = loadState(), currentSong='magnetic', game=null, audioCtx=null, masterGain=null, audioTimer=null, toastTimer=null;
@@ -36,7 +37,7 @@
     game={running:false,paused:false,start:0,elapsed:0,duration:30,score:0,combo:0,maxCombo:0,hits:0,misses:0,total:0,notes:[],next:0,noteIndex:0,audio,chart:s.chart||[],danceStep:0,lastDanceTime:-10};
     const board=$('#rhythmBoard'); $$('.note',board).forEach(n=>n.remove());
     $('#score').textContent='000000'; $('#combo').textContent='0'; $('#accuracy').textContent='100%'; $('#songProgress').style.width='0%';
-    $('#playingTitle').textContent=s.name.toUpperCase()+' · '+s.artist; $('#feedback').textContent='GET READY!'; $('#countdown').hidden=false;
+    $('#playingTitle').textContent=s.name.toUpperCase()+' · '+s.artist; $('.stage-booboo').src=s.image||'assets/booboo-idol.png'; $('.stage-booboo').alt='BooBoo performing '+s.name; $('.idol-photo-small').src=s.image||'assets/booboo-idol.png'; $('#feedback').textContent='GET READY!'; $('#countdown').hidden=false;
     showView('game'); let n=3; $('#countdown').textContent=n; const session=game;
     const tick=()=>{if(game!==session)return;if(n>1){n--;$('#countdown').textContent=n;session.countdownTimer=setTimeout(tick,650);}
       else {$('#countdown').hidden=true;session.running=true;session.start=performance.now();session.duration=audio.duration||30;

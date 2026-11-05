@@ -18,6 +18,8 @@ const easyTimes = magneticBeats.filter((_, i) => i % 2 === 0);
 const mediumTimes = expandBeats(era404Beats, 3, 1);
 const hardTimes = expandBeats(ticktackBeats, 2, 0);
 
+const paranoidTimes = Array.from({length:44}, (_, i) => 0.55 + i * 0.66);
+
 window.BOOBOO_CHARTS = {
   magnetic: easyTimes.map((time, i) => ({
     time,
@@ -30,5 +32,9 @@ window.BOOBOO_CHARTS = {
   ticktack: hardTimes.map((time, i) => ({
     time,
     lane: [0, 2, 1, 3, 0, 1, 2, 3, 1, 0, 3, 2][i % 12]
+  })),
+  paranoid: paranoidTimes.map((time, i) => ({
+    time,
+    lane: [0, 2, 1, 3, 1, 0, 2, 3][i % 8]
   }))
 };
