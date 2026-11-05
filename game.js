@@ -39,12 +39,30 @@
     $('#score').textContent='000000'; $('#combo').textContent='0'; $('#accuracy').textContent='100%'; $('#songProgress').style.width='0%';
     $('#playingTitle').textContent=s.name.toUpperCase()+' · '+s.artist; $('.stage-booboo').src=s.image||'assets/booboo-idol.png'; $('.stage-booboo').alt='BooBoo performing '+s.name; $('.idol-photo-small').src=s.image||'assets/booboo-idol.png'; $('#feedback').textContent='GET READY!'; $('#countdown').hidden=false;
     showView('game'); let n=3; $('#countdown').textContent=n; const session=game;
+    const showAudioFailure=()=>{if(game!==session)return;session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='AUDIO FILE NOT FOUND';$('#countdown').onclick=null;feedback('ADD paranoid.mp3 TO assets/audio');};
+    const beginPlayback=async()=>{
+      if(game!==session)return;
+      try{
+        await audio.play();
+        if(game!==session)return;
+        $('#countdown').hidden=true;$('#countdown').onclick=null;
+        session.running=true;session.paused=false;session.start=performance.now();
+        if(Number.isFinite(audio.duration)&&audio.duration>0)session.duration=audio.duration;
+        else session.duration=30;
+        gameLoop();
+      }catch(err){
+        if(game!==session)return;
+        session.running=false;$('#countdown').hidden=false;
+        $('#countdown').textContent='CAN’T PLAY AUDIO — TAP TO RETRY';
+        feedback('CHECK THE MP3 FILE');
+      }
+    };
     const tick=()=>{if(game!==session)return;if(n>1){n--;$('#countdown').textContent=n;session.countdownTimer=setTimeout(tick,650);}
-      else {$('#countdown').hidden=true;session.running=true;session.start=performance.now();session.duration=audio.duration||30;
-        audio.play().then(()=>gameLoop()).catch(()=>{feedback('TAP TO START AUDIO');session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='TAP TO PLAY';$('#countdown').onclick=()=>{audio.play().then(()=>{$('#countdown').hidden=true;session.running=true;session.start=performance.now();gameLoop();});};});
-      }};
+      else {session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='TAP TO PLAY';$('#countdown').onclick=beginPlayback;}
+    };
     session.countdownTimer=setTimeout(tick,650);
-    audio.addEventListener('error',()=>{if(game===session){session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='AUDIO FILES NOT FOUND';feedback('UPLOAD THE MP3 FILES TO GITHUB');}});
+    audio.addEventListener('error',showAudioFailure);
+    audio.addEventListener('loadedmetadata',()=>{if(game===session&&Number.isFinite(audio.duration)&&audio.duration>0)session.duration=audio.duration;});
     audio.addEventListener('ended',()=>{if(game===session)finishGame();});
   }
   function gameLoop(){
