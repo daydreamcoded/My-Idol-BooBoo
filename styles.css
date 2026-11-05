@@ -222,3 +222,5 @@ body:has(#game.active-view) main{width:100%;max-width:none;margin:0;padding:0}
 }
 
 .song-cover.cover-photo{padding:0;overflow:hidden;background:#f8e6f2}.song-cover.cover-photo:before,.song-cover.cover-photo:after{content:none}.song-cover-image{display:block;width:100%;height:100%;min-height:inherit;object-fit:cover;object-position:center;border-radius:inherit}
+
+.song-cover.cover-photo{padding:0;overflow:hidden;background:#090909}.song-cover.cover-photo:before,.song-cover.cover-photo:after{content:none}.song-cover-image{display:block;width:100%;height:100%;min-height:inherit;object-fit:cover;object-position:center;border-radius:inherit}
