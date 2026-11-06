@@ -8,14 +8,14 @@
     era404: {name:'404 (New Era)', artist:'KiiiKiii', group:'sister', difficulty:'MEDIUM', file:'assets/audio/404-new-era.mp3', chart:window.BOOBOO_CHARTS.era404, cover:'assets/covers/404.webp', image:'assets/booboo-idol.png'},
     ticktack: {name:'Tick-Tack', artist:'ILLIT', group:'sister', difficulty:'HARD', file:'assets/audio/tick-tack.mp3', chart:window.BOOBOO_CHARTS.ticktack, cover:'assets/covers/tick-tack.webp', image:'assets/booboo-idol.png'},
     paranoid: {name:'Paranoid', artist:'Black Sabbath', group:'brother', difficulty:'HARD', file:'assets/audio/black_sabbath_paranoid.mp3', chart:window.BOOBOO_CHARTS.paranoid, cover:'assets/covers/paranoid.jpg', image:'assets/paranoid-rock.png'},
-    yourUnderArrest: {name:'Your Under Arrest', artist:'ILLIT', group:'sister', difficulty:'MEDIUM', file:'assets/audio/your-under-arrest-illit.mp3', chart:window.BOOBOO_CHARTS.yourUnderArrest, coverText:'YOUR UNDER ARREST', coverClass:'cover-illit'},
-    superInLove: {name:'Super in Love', artist:'ILLIT', group:'sister', difficulty:'EASY', file:'assets/audio/super-in-love-illit.mp3', chart:window.BOOBOO_CHARTS.superInLove, coverText:'SUPER IN LOVE', coverClass:'cover-illit'},
-    looksCanKill: {name:'Looks Can Kill', artist:'IVE', group:'sister', difficulty:'HARD', file:'assets/audio/looks-can-kill-ive.mp3', chart:window.BOOBOO_CHARTS.looksCanKill, coverText:'LOOKS CAN KILL', coverClass:'cover-ive'},
-    bangBang: {name:'Bang Bang', artist:'IVE', group:'sister', difficulty:'MEDIUM', file:'assets/audio/bang-bang-ive.mp3', chart:window.BOOBOO_CHARTS.bangBang, coverText:'BANG BANG', coverClass:'cover-ive'},
-    sugarHoneyIcedTea: {name:'Sugar Honey Iced Tea', artist:'BABYMONSTER', group:'sister', difficulty:'EASY', file:'assets/audio/sugar-honey-iced-tea-babymonster.mp3', chart:window.BOOBOO_CHARTS.sugarHoneyIcedTea, coverText:'SUGAR HONEY ICED TEA', coverClass:'cover-bm'},
-    choom: {name:'CHOOM', artist:'BABYMONSTER', group:'sister', difficulty:'MEDIUM', file:'assets/audio/choom-babymonster.mp3', chart:window.BOOBOO_CHARTS.choom, coverText:'CHOOM', coverClass:'cover-bm'},
-    topGun: {name:'Top Gun Theme', artist:'Harold Faltermeyer', group:'brother', difficulty:'MEDIUM', file:'assets/audio/top-gun-theme.mp3', chart:window.BOOBOO_CHARTS.topGun, coverText:'TOP GUN', coverClass:'cover-brother'},
-    verityMinecraft: {name:'Verity Minecraft', artist:'Verity', group:'brother', difficulty:'EASY', file:'assets/audio/verity-minecraft.mp3', chart:window.BOOBOO_CHARTS.verityMinecraft, coverText:'VERITY MINECRAFT', coverClass:'cover-brother'}
+    yourUnderArrest: {name:'Your Under Arrest', artist:'ILLIT', group:'sister', difficulty:'MEDIUM', file:'assets/audio/Your Under Arrest - Illit.mp3', chart:window.BOOBOO_CHARTS.yourUnderArrest, coverText:'YOUR UNDER ARREST', coverClass:'cover-illit'},
+    superInLove: {name:'Super in Love', artist:'ILLIT', group:'sister', difficulty:'EASY', file:'assets/audio/Super in Love- Illit.mp3', chart:window.BOOBOO_CHARTS.superInLove, coverText:'SUPER IN LOVE', coverClass:'cover-illit'},
+    looksCanKill: {name:'Looks Can Kill', artist:'IVE', group:'sister', difficulty:'HARD', file:'assets/audio/Looks Can Kill - IVE.mp3', chart:window.BOOBOO_CHARTS.looksCanKill, coverText:'LOOKS CAN KILL', coverClass:'cover-ive'},
+    bangBang: {name:'Bang Bang', artist:'IVE', group:'sister', difficulty:'MEDIUM', file:'assets/audio/Bang Bang- IVE.mp3', chart:window.BOOBOO_CHARTS.bangBang, coverText:'BANG BANG', coverClass:'cover-ive'},
+    sugarHoneyIcedTea: {name:'Sugar Honey Iced Tea', artist:'BABYMONSTER', group:'sister', difficulty:'EASY', file:'assets/audio/Sugar Honey Iced Tea - Babymonster.mp3', chart:window.BOOBOO_CHARTS.sugarHoneyIcedTea, coverText:'SUGAR HONEY ICED TEA', coverClass:'cover-bm'},
+    choom: {name:'CHOOM', artist:'BABYMONSTER', group:'sister', difficulty:'MEDIUM', file:'assets/audio/CHOOM- Babymonster.mp3', chart:window.BOOBOO_CHARTS.choom, coverText:'CHOOM', coverClass:'cover-bm'},
+    topGun: {name:'Top Gun Theme', artist:'Harold Faltermeyer', group:'brother', difficulty:'MEDIUM', file:'assets/audio/Top Gun Theme.mp3', chart:window.BOOBOO_CHARTS.topGun, coverText:'TOP GUN', coverClass:'cover-brother'},
+    verityMinecraft: {name:'Verity Minecraft', artist:'Verity', group:'brother', difficulty:'EASY', file:'assets/audio/Verity Minecraft.mp3', chart:window.BOOBOO_CHARTS.verityMinecraft, coverText:'VERITY MINECRAFT', coverClass:'cover-brother'}
   };
   const fresh = () => ({best:0, songsPlayed:0, totalScore:0, sfx:true, reducedMotion:false});
   let state = loadState(), currentSong='magnetic', game=null, audioCtx=null, masterGain=null, audioTimer=null, toastTimer=null;
@@ -39,12 +39,12 @@
       return '<article class="song-card album-card '+(currentSong===id?'selected':'')+'" data-song="'+id+'"><div class="song-cover album-cover">'+cover+'</div><div class="song-info"><div><h3>'+s.name+'</h3><p>'+s.artist+'</p></div><span class="song-bpm">'+s.difficulty+'</span></div><button class="song-play '+(currentSong===id?'primary-btn':'secondary-btn')+'" data-play-song="'+id+'">▶ PLAY SONG</button></article>';
     }).join('')+'</div>';
   }
-  function selectSong(id){currentSong=id;$('.song-card').forEach(c=>c.classList.toggle('selected',c.dataset.song===id));$('[data-play-song]').forEach(b=>{b.className='song-play '+(b.dataset.playSong===id?'primary-btn':'secondary-btn')});}
+  function selectSong(id){currentSong=id;$$('.song-card').forEach(c=>c.classList.toggle('selected',c.dataset.song===id));$$('[data-play-song]').forEach(b=>{b.className='song-play '+(b.dataset.playSong===id?'primary-btn':'secondary-btn')});}
   document.addEventListener('click',e=>{
     const difficulty=e.target.closest('[data-difficulty]');
-    if(difficulty){const section=difficulty.dataset.section;$('[data-difficulty][data-section="'+section+'"]').forEach(b=>b.classList.toggle('active',b===difficulty));$(section==='sister'?'#sisterSongShelf':'#brotherSongShelf').hidden=true;renderSongShelf(section,difficulty.dataset.difficulty);return;}
+    if(difficulty){const section=difficulty.dataset.section;$$('[data-difficulty][data-section="'+section+'"]').forEach(b=>b.classList.toggle('active',b===difficulty));$(section==='sister'?'#sisterSongShelf':'#brotherSongShelf').hidden=true;renderSongShelf(section,difficulty.dataset.difficulty);return;}
     const back=e.target.closest('[data-back-shelf]');
-    if(back){$(back.dataset.backShelf==='sister'?'#sisterSongShelf':'#brotherSongShelf').hidden=true;$('[data-difficulty][data-section="'+back.dataset.backShelf+'"]').forEach(b=>b.classList.remove('active'));return;}
+    if(back){$(back.dataset.backShelf==='sister'?'#sisterSongShelf':'#brotherSongShelf').hidden=true;$$('[data-difficulty][data-section="'+back.dataset.backShelf+'"]').forEach(b=>b.classList.remove('active'));return;}
     const play=e.target.closest('[data-play-song]');
     if(play){selectSong(play.dataset.playSong);startGame();return;}
     const card=e.target.closest('.song-card');
