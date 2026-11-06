@@ -1,40 +1,24 @@
-/* Hand-tuned note charts: Magnetic = easy, 404 = medium, Tick-Tack = hard. */
+/* Gentler, less crowded charts so every difficulty feels more playable. */
 const magneticBeats = [0.07,0.65,1.207,1.765,2.159,2.415,2.694,2.949,3.204,3.46,3.715,3.971,4.249,4.505,4.76,5.271,5.526,5.782,6.06,6.316,6.571,6.827,7.082,7.338,7.593,7.848,8.104,8.638,8.893,9.149,9.427,9.915,10.194,10.449,10.704,10.96,11.215,11.494,12.005,12.26,12.516,12.771,13.026,13.305,13.56,13.816,14.071,14.327,14.582,14.838,15.116,15.372,15.627,15.882,16.138,16.393,16.927,17.183,17.438,17.694,17.949,18.204,18.483,18.739,18.994,19.528,20.039,20.294,20.55,20.805,21.06,21.316,21.571,22.616,22.872,23.127,23.382,23.638,23.917,24.172,24.427,24.683,24.938,25.333,25.728,25.983,26.239,26.494,26.773,27.028,27.283,27.539,27.794,28.05,28.305,28.584,28.839,29.095];
 const era404Beats = [0.07,0.511,0.766,1.254,1.695,2.159,2.647,3.111,3.576,4.063,4.528,5.016,5.48,5.944,6.432,6.896,7.361,7.825,8.081,8.545,8.916,9.265,9.729,10.194,10.681,11.146,11.61,12.098,12.562,13.026,13.514,13.886,14.234,14.582,14.93,15.65,16.115,16.486,16.742,17.043,17.299,17.694,17.995,18.251,18.622,18.947,19.319,19.574,19.876,20.132,20.503,20.828,21.084,21.455,21.78,22.152,22.5];
 const ticktackBeats = [0.464,0.975,1.37,1.858,2.206,2.763,3.228,3.692,4.04,4.505,5.062,5.317,5.898,6.455,7.152,8.29,8.754,9.009,9.474,9.845,10.147,10.588,10.844,11.308,11.656,12.005,12.446,12.91,13.282,13.746,14.071,14.536,14.907,15.372,15.697,16.138,16.393,16.858,17.229,17.67,17.972,18.228,18.692,19.064,19.389,19.83,20.294,20.666,21.13,21.455,22.129,22.616,22.941,23.29,23.777,24.218,24.59,24.892,25.147,25.612,26.076,26.448,26.749,27.214,27.469,27.91,28.305,28.584,28.839,29.304,29.768];
-
-function expandBeats(beats, every, offset = 1) {
-  const result = [];
-  beats.forEach((time, i) => {
-    result.push(time);
-    if (i < beats.length - 1 && i % every === offset) {
-      result.push((time + beats[i + 1]) / 2);
-    }
-  });
-  return result.sort((a, b) => a - b);
+function makeChart(duration, interval, offset=0, pattern=[0,1,2,3,1,0,2,3]){
+  const chart=[];let i=0;
+  for(let time=0.65+offset;time<duration-0.8;time+=interval){chart.push({time:Number(time.toFixed(3)),lane:pattern[i%pattern.length]});i++;}
+  return chart;
 }
-
-const easyTimes = magneticBeats.filter((_, i) => i % 2 === 0);
-const mediumTimes = expandBeats(era404Beats, 3, 1);
-const hardTimes = expandBeats(ticktackBeats, 2, 0);
-
-const paranoidTimes = Array.from({length:44}, (_, i) => 0.55 + i * 0.66);
-
-window.BOOBOO_CHARTS = {
-  magnetic: easyTimes.map((time, i) => ({
-    time,
-    lane: [0, 1, 0, 2, 1, 3, 2, 3][Math.floor(i / 2) % 8]
-  })),
-  era404: mediumTimes.map((time, i) => ({
-    time,
-    lane: [1, 0, 3, 2, 1, 3, 0, 2, 2, 1, 3, 0][i % 12]
-  })),
-  ticktack: hardTimes.map((time, i) => ({
-    time,
-    lane: [0, 2, 1, 3, 0, 1, 2, 3, 1, 0, 3, 2][i % 12]
-  })),
-  paranoid: paranoidTimes.map((time, i) => ({
-    time,
-    lane: [0, 2, 1, 3, 1, 0, 2, 3][i % 8]
-  }))
+function pickEvery(beats,step,pattern){return beats.filter((_,i)=>i%step===0).map((time,i)=>({time,lane:pattern[i%pattern.length]}));}
+window.BOOBOO_CHARTS={
+ magnetic:pickEvery(magneticBeats,3,[0,1,2,3,1,0,2,3]),
+ era404:pickEvery(era404Beats,2,[1,0,3,2,1,3,0,2]),
+ ticktack:pickEvery(ticktackBeats,2,[0,2,1,3,0,1,2,3]),
+ paranoid:makeChart(30,0.58,0,[0,2,1,3,1,0,2,3]),
+ yourUnderArrest:makeChart(30.6,0.76,0,[0,2,1,3,2,1,0,3]),
+ superInLove:makeChart(47.3,1.02,0,[0,1,2,3,1,0,2,3]),
+ looksCanKill:makeChart(72.6,0.58,0,[0,2,1,3,0,1,2,3]),
+ bangBang:makeChart(39.8,0.76,0,[1,0,3,2,1,3,0,2]),
+ sugarHoneyIcedTea:makeChart(30.8,1.02,0,[0,1,2,3,1,0,2,3]),
+ choom:makeChart(39.2,0.76,0,[0,2,1,3,2,1,0,3]),
+ topGun:makeChart(20.1,0.76,0,[0,2,1,3,1,0,2,3]),
+ verityMinecraft:makeChart(35,1.02,0,[0,1,2,3,1,0,2,3])
 };

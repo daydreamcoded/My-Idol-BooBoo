@@ -4,10 +4,18 @@
   const $$ = (s, root=document) => [...root.querySelectorAll(s)];
   const SAVE_KEY = 'myIdolBooBoo_v1';
   const songData = {
-    magnetic: {name:'Magnetic', artist:'ILLIT', difficulty:'EASY', file:'assets/audio/magnetic.mp3', chart:window.BOOBOO_CHARTS.magnetic, image:'assets/booboo-idol.png'},
-    era404: {name:'404 (New Era)', artist:'KiiiKiii', difficulty:'MEDIUM', file:'assets/audio/404-new-era.mp3', chart:window.BOOBOO_CHARTS.era404, image:'assets/booboo-idol.png'},
-    ticktack: {name:'Tick-Tack', artist:'ILLIT', difficulty:'HARD', file:'assets/audio/tick-tack.mp3', chart:window.BOOBOO_CHARTS.ticktack, image:'assets/booboo-idol.png'},
-    paranoid: {name:'Paranoid', artist:'Black Sabbath', difficulty:'MEDIUM', file:'assets/audio/black_sabbath_paranoid.mp3', chart:window.BOOBOO_CHARTS.paranoid, image:'assets/paranoid-rock.png'}
+    magnetic: {name:'Magnetic', artist:'ILLIT', group:'sister', difficulty:'EASY', file:'assets/audio/magnetic.mp3', chart:window.BOOBOO_CHARTS.magnetic, cover:'assets/covers/magnetic.webp', image:'assets/booboo-idol.png'},
+    era404: {name:'404 (New Era)', artist:'KiiiKiii', group:'sister', difficulty:'MEDIUM', file:'assets/audio/404-new-era.mp3', chart:window.BOOBOO_CHARTS.era404, cover:'assets/covers/404.webp', image:'assets/booboo-idol.png'},
+    ticktack: {name:'Tick-Tack', artist:'ILLIT', group:'sister', difficulty:'HARD', file:'assets/audio/tick-tack.mp3', chart:window.BOOBOO_CHARTS.ticktack, cover:'assets/covers/tick-tack.webp', image:'assets/booboo-idol.png'},
+    paranoid: {name:'Paranoid', artist:'Black Sabbath', group:'brother', difficulty:'HARD', file:'assets/audio/black_sabbath_paranoid.mp3', chart:window.BOOBOO_CHARTS.paranoid, cover:'assets/covers/paranoid.jpg', image:'assets/paranoid-rock.png'},
+    yourUnderArrest: {name:'Your Under Arrest', artist:'ILLIT', group:'sister', difficulty:'MEDIUM', file:'assets/audio/your-under-arrest-illit.mp3', chart:window.BOOBOO_CHARTS.yourUnderArrest, coverText:'YOUR UNDER ARREST', coverClass:'cover-illit'},
+    superInLove: {name:'Super in Love', artist:'ILLIT', group:'sister', difficulty:'EASY', file:'assets/audio/super-in-love-illit.mp3', chart:window.BOOBOO_CHARTS.superInLove, coverText:'SUPER IN LOVE', coverClass:'cover-illit'},
+    looksCanKill: {name:'Looks Can Kill', artist:'IVE', group:'sister', difficulty:'HARD', file:'assets/audio/looks-can-kill-ive.mp3', chart:window.BOOBOO_CHARTS.looksCanKill, coverText:'LOOKS CAN KILL', coverClass:'cover-ive'},
+    bangBang: {name:'Bang Bang', artist:'IVE', group:'sister', difficulty:'MEDIUM', file:'assets/audio/bang-bang-ive.mp3', chart:window.BOOBOO_CHARTS.bangBang, coverText:'BANG BANG', coverClass:'cover-ive'},
+    sugarHoneyIcedTea: {name:'Sugar Honey Iced Tea', artist:'BABYMONSTER', group:'sister', difficulty:'EASY', file:'assets/audio/sugar-honey-iced-tea-babymonster.mp3', chart:window.BOOBOO_CHARTS.sugarHoneyIcedTea, coverText:'SUGAR HONEY ICED TEA', coverClass:'cover-bm'},
+    choom: {name:'CHOOM', artist:'BABYMONSTER', group:'sister', difficulty:'MEDIUM', file:'assets/audio/choom-babymonster.mp3', chart:window.BOOBOO_CHARTS.choom, coverText:'CHOOM', coverClass:'cover-bm'},
+    topGun: {name:'Top Gun Theme', artist:'Harold Faltermeyer', group:'brother', difficulty:'MEDIUM', file:'assets/audio/top-gun-theme.mp3', chart:window.BOOBOO_CHARTS.topGun, coverText:'TOP GUN', coverClass:'cover-brother'},
+    verityMinecraft: {name:'Verity Minecraft', artist:'Verity', group:'brother', difficulty:'EASY', file:'assets/audio/verity-minecraft.mp3', chart:window.BOOBOO_CHARTS.verityMinecraft, coverText:'VERITY MINECRAFT', coverClass:'cover-brother'}
   };
   const fresh = () => ({best:0, songsPlayed:0, totalScore:0, sfx:true, reducedMotion:false});
   let state = loadState(), currentSong='magnetic', game=null, audioCtx=null, masterGain=null, audioTimer=null, toastTimer=null;
@@ -22,9 +30,26 @@
   function closeModal(){ $('#modalBackdrop').hidden=true; }
   $('#closeModal').addEventListener('click',closeModal); $('#modalBackdrop').addEventListener('click',e=>{if(e.target.id==='modalBackdrop')closeModal()});
   function toast(msg){const el=$('#toast');el.textContent=msg;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400)}
-  $$('.song-card').forEach(card=>card.addEventListener('click',e=>{if(e.target.closest('button'))return;selectSong(card.dataset.song)}));
-  function selectSong(id){currentSong=id;$$('.song-card').forEach(c=>c.classList.toggle('selected',c.dataset.song===id));$$('[data-play-song]').forEach(b=>{b.className='song-play '+(b.dataset.playSong===id?'primary-btn':'secondary-btn')});}
-  $$('[data-play-song]').forEach(b=>b.addEventListener('click',()=>{selectSong(b.dataset.playSong);startGame()}));
+  function renderSongShelf(section,difficulty){
+    const shelf=$(section==='sister'?'#sisterSongShelf':'#brotherSongShelf');
+    const matches=Object.entries(songData).filter(([id,s])=>s.group===section&&s.difficulty===difficulty);
+    shelf.hidden=false;
+    shelf.innerHTML='<div class="shelf-top"><button class="back-link shelf-back" data-back-shelf="'+section+'">← Difficulties</button><h3>'+difficulty+' SONGS</h3><span>'+matches.length+' TRACKS</span></div><div class="song-grid album-grid">'+matches.map(([id,s])=>{
+      const cover=s.cover?'<img class="song-cover-image" src="'+s.cover+'" alt="'+s.name+' cover art">':'<div class="cover-placeholder '+(s.coverClass||'')+'"><span>✦</span><strong>'+s.coverText+'</strong><i>MY IDOL, BOOBOO</i></div>';
+      return '<article class="song-card album-card '+(currentSong===id?'selected':'')+'" data-song="'+id+'"><div class="song-cover album-cover">'+cover+'</div><div class="song-info"><div><h3>'+s.name+'</h3><p>'+s.artist+'</p></div><span class="song-bpm">'+s.difficulty+'</span></div><button class="song-play '+(currentSong===id?'primary-btn':'secondary-btn')+'" data-play-song="'+id+'">▶ PLAY SONG</button></article>';
+    }).join('')+'</div>';
+  }
+  function selectSong(id){currentSong=id;$('.song-card').forEach(c=>c.classList.toggle('selected',c.dataset.song===id));$('[data-play-song]').forEach(b=>{b.className='song-play '+(b.dataset.playSong===id?'primary-btn':'secondary-btn')});}
+  document.addEventListener('click',e=>{
+    const difficulty=e.target.closest('[data-difficulty]');
+    if(difficulty){const section=difficulty.dataset.section;$('[data-difficulty][data-section="'+section+'"]').forEach(b=>b.classList.toggle('active',b===difficulty));$(section==='sister'?'#sisterSongShelf':'#brotherSongShelf').hidden=true;renderSongShelf(section,difficulty.dataset.difficulty);return;}
+    const back=e.target.closest('[data-back-shelf]');
+    if(back){$(back.dataset.backShelf==='sister'?'#sisterSongShelf':'#brotherSongShelf').hidden=true;$('[data-difficulty][data-section="'+back.dataset.backShelf+'"]').forEach(b=>b.classList.remove('active'));return;}
+    const play=e.target.closest('[data-play-song]');
+    if(play){selectSong(play.dataset.playSong);startGame();return;}
+    const card=e.target.closest('.song-card');
+    if(card)selectSong(card.dataset.song);
+  });
   $('#againBtn').addEventListener('click',()=>{showView('songs');startGame()});
   $('#soundToggle').addEventListener('click',()=>{soundOn=!soundOn;$('#soundToggle').innerHTML=`♫ <span>${soundOn?'Sound on':'Sound off'}</span>`;if(masterGain)masterGain.gain.value=soundOn?0.22:0;if(game&&game.audio)game.audio.volume=soundOn?0.9:0;});
   $('#sfxSetting').checked=state.sfx;$('#sfxSetting').addEventListener('change',e=>{state.sfx=e.target.checked;save();});
@@ -70,7 +95,7 @@
     const audioTime=game.audio.currentTime;
     game.elapsed=audioTime; $('#songProgress').style.width=Math.min(100,audioTime/Math.max(1,game.duration)*100)+'%';
     if(game.audio.ended||audioTime>=game.duration){finishGame();return;}
-    const travel=1.35;
+    const travel=1.65;
     while(game.noteIndex<game.chart.length && game.chart[game.noteIndex].time<=audioTime+travel){
       const item=game.chart[game.noteIndex++]; spawnNote(item.lane,item.time,travel);
     }
@@ -80,7 +105,7 @@
       const board=$('.rhythm-board'), top=progress*(board.clientHeight-100)-25;
       note.el.style.top=top+'px';
       if(!note.danced && remaining<=0.045 && remaining>=-0.075){note.danced=true;danceOnBeat=true;}
-      if(!note.done && remaining < -0.22){note.done=true;note.el.remove();game.misses++;game.combo=0;feedback('MISS');updateHud();}
+      if(!note.done && remaining < -0.30){note.done=true;note.el.remove();game.misses++;game.combo=0;feedback('MISS');updateHud();}
     });
     if(danceOnBeat && audioTime-game.lastDanceTime>=0.46){game.lastDanceTime=audioTime;danceBooBoo();}
     game.notes=game.notes.filter(n=>!n.done);
@@ -101,7 +126,7 @@
     const laneEl=$$('.lane')[lane];laneEl.appendChild(el);el.style.top='-28px';
     game.notes.push({lane,el,time:targetTime,done:false,danced:false});
   }
-  function hitLane(lane){if(!game||!game.running||game.paused)return;const h=$('.hit-line').getBoundingClientRect().top;let best=null,dist=Infinity;game.notes.forEach(n=>{if(n.lane!==lane||n.done)return;const r=n.el.getBoundingClientRect();const d=Math.abs((r.top+r.height/2)-h);if(d<dist){dist=d;best=n;}});if(best&&dist<90){best.done=true;best.el.remove();game.hits++;game.total++;let pts,txt;if(dist<28){pts=100;txt='PERFECT!';game.combo++;}else if(dist<60){pts=65;txt='GREAT!';game.combo++;}else{pts=30;txt='GOOD!';game.combo++;}game.score+=pts+Math.min(game.combo,30)*2;game.maxCombo=Math.max(game.maxCombo,game.combo);feedback(txt);tone([659,784,988][Math.min(2,Math.floor(dist/30))],.08,'sine',.08);}else{game.misses++;game.combo=0;feedback('MISS');tone(180,.08,'triangle',.03);}updateHud();}
+  function hitLane(lane){if(!game||!game.running||game.paused)return;const h=$('.hit-line').getBoundingClientRect().top;let best=null,dist=Infinity;game.notes.forEach(n=>{if(n.lane!==lane||n.done)return;const r=n.el.getBoundingClientRect();const d=Math.abs((r.top+r.height/2)-h);if(d<dist){dist=d;best=n;}});if(best&&dist<108){best.done=true;best.el.remove();game.hits++;game.total++;let pts,txt;if(dist<36){pts=100;txt='PERFECT!';game.combo++;}else if(dist<76){pts=65;txt='GREAT!';game.combo++;}else{pts=30;txt='GOOD!';game.combo++;}game.score+=pts+Math.min(game.combo,30)*2;game.maxCombo=Math.max(game.maxCombo,game.combo);feedback(txt);tone([659,784,988][Math.min(2,Math.floor(dist/30))],.08,'sine',.08);}else{game.misses++;game.combo=0;feedback('MISS');tone(180,.08,'triangle',.03);}updateHud();}
   function feedback(txt){$('#feedback').textContent=txt;$('#feedback').style.color=txt==='MISS'?'#ff8ab7':txt==='PERFECT!'?'#ffe45c':'#8eeeff';}
   function updateHud(){if(!game)return;$('#score').textContent=String(game.score).padStart(6,'0');$('#combo').textContent=game.combo;const attempts=game.hits+game.misses;$('#accuracy').textContent=(attempts?Math.round(game.hits/attempts*100):100)+'%';}
   document.addEventListener('keydown',e=>{if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;const keys={ArrowLeft:0,ArrowDown:1,ArrowUp:2,ArrowRight:3};if(e.key in keys){e.preventDefault();hitLane(keys[e.key]);}if(e.key==='Escape'&&game)togglePause();});

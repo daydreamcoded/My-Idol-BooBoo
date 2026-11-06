@@ -66,15 +66,20 @@
 </section>
 <section class="view" id="songs">
  <div class="page-heading"><p class="eyebrow">SOUND CHECK! 🎤</p><h1>Pick a <span class="gradient-text">track</span></h1><p>Choose your stage mix, then hit the falling arrows when they reach the glowing line.</p></div>
- <div class="category-heading sister-heading"><span>SISTER ♡</span><small>K-POP SONGS</small></div><div class="song-grid sister-grid">
-  <article class="song-card selected" data-song="magnetic"><div class="song-cover cover-pink cover-photo"><img class="song-cover-image" src="assets/covers/magnetic.webp" alt="ILLIT Magnetic cover photo: girls in a circle"></div><div class="song-info"><div><h3>Magnetic</h3><p>ILLIT · Easy</p></div><span class="song-bpm">EASY</span></div><button class="song-play primary-btn" data-play-song="magnetic">▶ PLAY SONG</button></article>
-  <article class="song-card" data-song="era404"><div class="song-cover cover-retro cover-photo"><img class="song-cover-image" src="assets/covers/404.webp" alt="KiiiKiii 404 cover photo: pink decorated cap"></div><div class="song-info"><div><h3>404 (New Era)</h3><p>KiiiKiii · Medium</p></div><span class="song-bpm">MEDIUM</span></div><button class="song-play secondary-btn" data-play-song="era404">▶ PLAY SONG</button></article>
-  <article class="song-card" data-song="ticktack"><div class="song-cover cover-y2k cover-photo"><img class="song-cover-image" src="assets/covers/tick-tack.webp" alt="ILLIT Tick-Tack cover photo: garden scooter scene"></div><div class="song-info"><div><h3>Tick-Tack</h3><p>ILLIT · Hard</p></div><span class="song-bpm">HARD</span></div><button class="song-play secondary-btn" data-play-song="ticktack">▶ PLAY SONG</button></article>
+ <div class="category-heading sister-heading"><span>SISTER ♡</span><small>K-POP SONGS</small></div>
+ <div class="difficulty-grid" data-section="sister">
+  <button class="difficulty-card" data-difficulty="EASY" data-section="sister"><b>EASY</b><span>Warm up with the lighter tracks</span></button>
+  <button class="difficulty-card" data-difficulty="MEDIUM" data-section="sister"><b>MEDIUM</b><span>A little more rhythm</span></button>
+  <button class="difficulty-card" data-difficulty="HARD" data-section="sister"><b>HARD</b><span>Bring your best paws</span></button>
  </div>
- <div class="category-heading brother-heading"><span>BROTHER ★</span><small>ROCK SONGS</small></div>
- <div class="song-grid brother-grid">
-  <article class="song-card" data-song="paranoid"><div class="song-cover cover-rock cover-photo"><img class="song-cover-image" src="assets/covers/paranoid.jpg" alt="Black Sabbath Paranoid album cover"></div><div class="song-info"><div><h3>Paranoid</h3><p>Black Sabbath · Medium</p></div><span class="song-bpm">MEDIUM</span></div><button class="song-play secondary-btn" data-play-song="paranoid">▶ PLAY SONG</button></article>
+ <div class="song-shelf" id="sisterSongShelf" hidden></div>
+ <div class="category-heading brother-heading"><span>BROTHER ★</span><small>ROCK + OTHER TRACKS</small></div>
+ <div class="difficulty-grid" data-section="brother">
+  <button class="difficulty-card" data-difficulty="EASY" data-section="brother"><b>EASY</b><span>Warm up with the lighter tracks</span></button>
+  <button class="difficulty-card" data-difficulty="MEDIUM" data-section="brother"><b>MEDIUM</b><span>A little more rhythm</span></button>
+  <button class="difficulty-card" data-difficulty="HARD" data-section="brother"><b>HARD</b><span>Bring your best paws</span></button>
  </div>
+ <div class="song-shelf" id="brotherSongShelf" hidden></div>
  <p class="small-note">Choose a difficulty, then tap the four big arrows on your iPad or use your keyboard. Each track has its own BooBoo look!</p>
 </section>
 <section class="view" id="game">
@@ -97,6 +102,6 @@
 </main>
 <div class="modal-backdrop" id="modalBackdrop" hidden><div class="modal"><button class="modal-close" id="closeModal" aria-label="Close">×</button><div id="modalContent"></div></div></div>
 <div class="toast" id="toast"></div>
-<script src="charts.js?v=paranoid-medium-1"></script>
-<script src="game.js?v=paranoid-audio-filename-fix-4"></script>
+<script src="charts.js?v=difficulty-shelves-1"></script>
+<script src="game.js?v=difficulty-shelves-1"></script>
 </body></html>
