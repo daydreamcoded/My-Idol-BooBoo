@@ -56,8 +56,39 @@
   $('#motionSetting').checked=state.reducedMotion;$('#motionSetting').addEventListener('change',e=>{state.reducedMotion=e.target.checked;document.body.classList.toggle('reduce-motion',state.reducedMotion);save();});
   function audioInit(){if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;audioCtx=new AC();masterGain=audioCtx.createGain();masterGain.gain.value=soundOn?0.22:0;masterGain.connect(audioCtx.destination);}if(audioCtx.state==='suspended')audioCtx.resume();}
   function tone(freq,dur=.11,wave='sine',vol=.12){if(!audioCtx||!state.sfx||!soundOn)return;const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=wave;o.frequency.value=freq;g.gain.setValueAtTime(0.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(vol,audioCtx.currentTime+.015);g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+dur);o.connect(g);g.connect(masterGain);o.start();o.stop(audioCtx.currentTime+dur+.02);}
+  async function detectTrackBeats(file,difficulty){
+    try{
+      audioInit();
+      const response=await fetch(file);
+      if(!response.ok) throw new Error('Audio fetch failed');
+      const bytes=await response.arrayBuffer();
+      const decoded=await audioCtx.decodeAudioData(bytes);
+      const channel=decoded.getChannelData(0), sampleRate=decoded.sampleRate;
+      const windowSize=Math.max(256,Math.floor(sampleRate*.025)), energy=[];
+      for(let start=0;start<channel.length;start+=windowSize){
+        let sum=0;for(let i=start;i<Math.min(start+windowSize,channel.length);i++)sum+=channel[i]*channel[i];
+        energy.push(Math.sqrt(sum/windowSize));
+      }
+      const flux=energy.map((v,i)=>Math.max(0,v-(energy[i-1]||0)));
+      const sorted=flux.slice().sort((a,b)=>a-b);
+      const threshold=Math.max(sorted[Math.floor(sorted.length*.72)]||0,.001);
+      const minGap=difficulty==='HARD'?.19:difficulty==='MEDIUM'?.27:.38;
+      const peaks=[];
+      for(let i=2;i<flux.length-2;i++){
+        if(flux[i]<threshold||flux[i]<flux[i-1]||flux[i]<=flux[i+1]||flux[i]<flux[i-2]||flux[i]<flux[i+2])continue;
+        const time=i*windowSize/sampleRate;
+        if(time<.45||time>decoded.duration-.35)continue;
+        if(!peaks.length||time-peaks[peaks.length-1].time>=minGap)peaks.push({time,lane:[0,1,2,3,2,0,1,3][peaks.length%8]});
+        else if(flux[i]>(peaks[peaks.length-1].strength||0)){
+          peaks[peaks.length-1]={time,lane:[0,1,2,3,2,0,1,3][peaks.length%8],strength:flux[i]};
+        }
+      }
+      return peaks.map(({time,lane})=>({time:Number(time.toFixed(3)),lane}));
+    }catch(error){return null;}
+  }
   function startGame(){
     stopGame(); const s=songData[currentSong];
+    const beatChartPromise=detectTrackBeats(s.file,s.difficulty);
     const audio=new Audio(s.file); audio.preload='auto'; audio.volume=soundOn?0.9:0;
     game={running:false,paused:false,start:0,elapsed:0,duration:30,score:0,combo:0,maxCombo:0,hits:0,misses:0,total:0,notes:[],next:0,noteIndex:0,audio,chart:s.chart||[],danceStep:0,lastDanceTime:-10};
     const board=$('#rhythmBoard'); $$('.note',board).forEach(n=>n.remove());
@@ -68,6 +99,9 @@
     const beginPlayback=async()=>{
       if(game!==session)return;
       try{
+        const detectedChart=await beatChartPromise;
+        if(game!==session)return;
+        if(detectedChart&&detectedChart.length>8)session.chart=detectedChart;
         await audio.play();
         if(game!==session)return;
         $('#countdown').hidden=true;$('#countdown').onclick=null;
