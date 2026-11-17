@@ -4,9 +4,9 @@
   const $$ = (s, root=document) => [...root.querySelectorAll(s)];
   const SAVE_KEY = 'myIdolBooBoo_v1';
   const songData = {
-    magnetic: {name:'Magnetic', artist:'ILLIT', group:'sister', difficulty:'EASY', file:'assets/audio/magnetic.mp3', chart:window.BOOBOO_CHARTS.magnetic, cover:'assets/covers/magnetic.webp', image:'assets/booboo-idol.png'},
-    era404: {name:'404 (New Era)', artist:'KiiiKiii', group:'sister', difficulty:'MEDIUM', file:'assets/audio/404-new-era.mp3', chart:window.BOOBOO_CHARTS.era404, cover:'assets/covers/404.webp', image:'assets/booboo-idol.png'},
-    ticktack: {name:'Tick-Tack', artist:'ILLIT', group:'sister', difficulty:'HARD', file:'assets/audio/tick-tack.mp3', chart:window.BOOBOO_CHARTS.ticktack, cover:'assets/covers/tick-tack.webp', image:'assets/booboo-idol.png'},
+    magnetic: {name:'Magnetic', artist:'ILLIT', group:'sister', difficulty:'EASY', file:'assets/audio/magnetic.mp3', chart:window.BOOBOO_CHARTS.magnetic, cover:'assets/covers/magnetic.webp', image:'assets/IMG_0966.png'},
+    era404: {name:'404 (New Era)', artist:'KiiiKiii', group:'sister', difficulty:'MEDIUM', file:'assets/audio/404-new-era.mp3', chart:window.BOOBOO_CHARTS.era404, cover:'assets/covers/404.webp', image:'assets/IMG_0966.png'},
+    ticktack: {name:'Tick-Tack', artist:'ILLIT', group:'sister', difficulty:'HARD', file:'assets/audio/tick-tack.mp3', chart:window.BOOBOO_CHARTS.ticktack, cover:'assets/covers/tick-tack.webp', image:'assets/IMG_0966.png'},
     paranoid: {name:'Paranoid', artist:'Black Sabbath', group:'brother', difficulty:'HARD', file:'assets/audio/black_sabbath_paranoid.mp3', chart:window.BOOBOO_CHARTS.paranoid, cover:'assets/covers/paranoid.jpg', image:'assets/paranoid-rock.png'},
     yourUnderArrest: {name:'Your Under Arrest', artist:'ILLIT', group:'sister', difficulty:'MEDIUM', file:'assets/audio/Your Under Arrest - Illit.mp3', chart:window.BOOBOO_CHARTS.yourUnderArrest, coverText:'YOUR UNDER ARREST', coverClass:'cover-illit'},
     superInLove: {name:'Super in Love', artist:'ILLIT', group:'sister', difficulty:'EASY', file:'assets/audio/Super in Love- Illit.mp3', chart:window.BOOBOO_CHARTS.superInLove, coverText:'SUPER IN LOVE', coverClass:'cover-illit'},
@@ -93,7 +93,7 @@
     game={running:false,paused:false,start:0,elapsed:0,duration:30,score:0,combo:0,maxCombo:0,hits:0,misses:0,total:0,notes:[],next:0,noteIndex:0,audio,chart:s.chart||[],danceStep:0,lastDanceTime:-10};
     const board=$('#rhythmBoard'); $$('.note',board).forEach(n=>n.remove());
     $('#score').textContent='000000'; $('#combo').textContent='0'; $('#accuracy').textContent='100%'; $('#songProgress').style.width='0%';
-    $('#playingTitle').textContent=s.name.toUpperCase()+' · '+s.artist; $('.stage-booboo').src=s.image||'assets/booboo-idol.png'; $('.stage-booboo').alt='BooBoo performing '+s.name; $('.idol-photo-small').src=s.image||'assets/booboo-idol.png'; $('#feedback').textContent='GET READY!'; $('#countdown').hidden=false;
+    $('#playingTitle').textContent=s.name.toUpperCase()+' · '+s.artist; $('.stage-booboo').src=s.image||'assets/IMG_0966.png'; $('.stage-booboo').alt='BooBoo performing '+s.name; $('.idol-photo-small').src=s.image||'assets/IMG_0966.png'; $('#feedback').textContent='GET READY!'; $('#countdown').hidden=false;
     showView('game'); let n=3; $('#countdown').textContent=n; const session=game;
     const showAudioFailure=()=>{if(game!==session)return;session.running=false;$('#countdown').hidden=false;$('#countdown').textContent='AUDIO COULD NOT LOAD';$('#countdown').onclick=null;feedback('CHECK AUDIO FILE / CONNECTION');};
     const beginPlayback=async()=>{
